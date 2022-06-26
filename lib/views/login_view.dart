@@ -1,30 +1,16 @@
-// ignore_for_file: avoid_print
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:mynotes/views/login_view.dart';
-import 'firebase_options.dart';
+import 'package:mynotes/firebase_options.dart';
 
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  runApp(MaterialApp(
-    title: 'Flutter Demo',
-    theme: ThemeData(
-      primaryColor: const Color.fromARGB(255, 31, 31, 31),
-    ),
-    home: const LoginView(),
-  ));
-}
-
-class RegisterView extends StatefulWidget {
-  const RegisterView({Key? key}) : super(key: key);
+class LoginView extends StatefulWidget {
+  const LoginView({Key? key}) : super(key: key);
 
   @override
-  State<RegisterView> createState() => _RegisterViewState();
+  State<LoginView> createState() => _LoginViewState();
 }
 
-class _RegisterViewState extends State<RegisterView> {
+class _LoginViewState extends State<LoginView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
 
@@ -49,7 +35,7 @@ class _RegisterViewState extends State<RegisterView> {
     return Scaffold(
         backgroundColor: const Color.fromARGB(255, 31, 31, 31),
         appBar: AppBar(
-          title: const Text("Register"),
+          title: const Text("Login"),
           backgroundColor: const Color.fromARGB(255, 107, 65, 114),
         ),
         body: FutureBuilder(
@@ -140,23 +126,22 @@ class _RegisterViewState extends State<RegisterView> {
                               try {
                                 final userCredential = await FirebaseAuth
                                     .instance
-                                    .createUserWithEmailAndPassword(
+                                    .signInWithEmailAndPassword(
                                         email: email, password: password);
-
+                                // ignore: avoid_print
                                 print(userCredential);
                               } on FirebaseAuthException catch (e) {
-                                if (e.code == "email-already-in-use") {
-                                  print("Email already in use");
-                                } else if (e.code == "network-request-failed") {
-                                  print("Could not connect to server");
-                                } else if (e.code == "weak-password") {
-                                  print("Weak Password");
-                                } else if (e.code == "invalid-email") {
-                                  print("Invalid email");
+                                if (e.code == "user-not-found") {
+                                  print("User not found");
+                                } else if (e.code == "wrong-password") {
+                                  print("Wrong password");
+                                } else {
+                                  print("Something wrong happened");
+                                  print(e.code);
                                 }
                               }
                             },
-                            child: const Text('Register')),
+                            child: const Text('Login')),
                       ),
                     ],
                   ),
