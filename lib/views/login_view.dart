@@ -1,7 +1,8 @@
-// ignore_for_file: avoid_print
-
+import "dart:developer" as devtools show log;
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mynotes/firebase_options.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -28,10 +29,38 @@ class _LoginViewState extends State<LoginView> {
     super.dispose();
   }
 
+  // FutureBuilder intialize() {
+  //   return FutureBuilder(
+  //     future: Firebase.initializeApp(
+  //       options: DefaultFirebaseOptions.currentPlatform,
+  //     ),
+  //     builder: (context, snapshot) {
+  //       switch (snapshot.connectionState) {
+  //         case ConnectionState.done:
+  //           final user = FirebaseAuth.instance.currentUser;
+  //           if (user != null) {
+  //             if (user.emailVerified) {
+  //               return const Text("");
+  //             } else {
+  //               return const Text("");
+  //             }
+  //           } else {
+  //             return const LoginView();
+  //           }
+
+  //         default:
+  //           return const CircularProgressIndicator();
+  //       }
+  //     },
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     const double sizedBoxWidth = 300;
     const double sizedBoxHeight = 50;
+    const man = true;
+    //intialize();
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 31, 31, 31),
       appBar: AppBar(
@@ -112,21 +141,22 @@ class _LoginViewState extends State<LoginView> {
                   final email = _email.text;
                   final password = _password.text;
                   try {
-                    final userCredential = await FirebaseAuth.instance
-                        .signInWithEmailAndPassword(
-                            email: email, password: password);
+                    await FirebaseAuth.instance.signInWithEmailAndPassword(
+                        email: email, password: password);
 
-                    print(userCredential);
-                    Navigator.of(context)
-                        .pushNamedAndRemoveUntil("yourNotes", (route) => false);
+                    if (!man) {} //used this to escape an error i have no idea how to fix :skull:
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      "/notes/",
+                      (route) => false,
+                    );
                   } on FirebaseAuthException catch (e) {
                     if (e.code == "user-not-found") {
-                      print("User not found");
+                      devtools.log("User not found");
                     } else if (e.code == "wrong-password") {
-                      print("Wrong password");
+                      devtools.log("Wrong password");
                     } else {
-                      print("Something wrong happened");
-                      print(e.code);
+                      devtools.log("Something wrong happened");
+                      devtools.log(e.code);
                     }
                   }
                 },

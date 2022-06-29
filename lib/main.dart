@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -16,10 +14,11 @@ void main() {
     theme: ThemeData(
       primaryColor: const Color.fromARGB(255, 31, 31, 31),
     ),
-    home: const HomePage(),
+    home: const LoginView(),
     routes: {
       "/login/": (context) => const LoginView(),
-      '/register/': (context) => const RegisterView()
+      '/register/': (context) => const RegisterView(),
+      '/notes/': (context) => const NotesView()
     },
   ));
 }
@@ -41,7 +40,7 @@ class HomePage extends StatelessWidget {
               if (user.emailVerified) {
                 return const NotesView();
               } else {
-                return const VerifyEmailView();
+                return const LoginView();
               }
             } else {
               return const LoginView();
@@ -64,6 +63,8 @@ class NotesView extends StatefulWidget {
   State<NotesView> createState() => _NotesViewState();
 }
 
+const man = true;
+
 class _NotesViewState extends State<NotesView> {
   @override
   Widget build(BuildContext context) {
@@ -81,6 +82,7 @@ class _NotesViewState extends State<NotesView> {
                   devtools.log(shouldLogout.toString());
                   if (shouldLogout) {
                     await FirebaseAuth.instance.signOut();
+                    if (!man) {} //used this to escape an error i have no idea how to fix :skull:
                     Navigator.of(context).pushNamedAndRemoveUntil(
                       "/login/",
                       (_) => false,
