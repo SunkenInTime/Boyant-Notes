@@ -130,6 +130,9 @@ class _LoginViewState extends State<LoginView> {
                       devtools.log("User not found");
                     } else if (e.code == "wrong-password") {
                       devtools.log("Wrong password");
+                    } else if (e.code == "network-request-failed") {
+                      devtools.log(
+                          "Could not connect to server check if your device is connected to the internet.");
                     } else {
                       devtools.log("Something wrong happened");
                       devtools.log(e.code);
