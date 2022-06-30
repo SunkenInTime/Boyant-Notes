@@ -1,11 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:mynotes/constants/routes.dart';
 import 'package:mynotes/firebase_options.dart';
 import 'package:mynotes/views/login_view.dart';
 import 'package:mynotes/views/register_view.dart';
 import 'package:mynotes/views/verify_email_view.dart';
 import "dart:developer" as devtools show log;
+
+//Creates an empty sized box for sapce
+SizedBox createSpace(double height) {
+  return SizedBox(height: height);
+}
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,11 +20,11 @@ void main() {
     theme: ThemeData(
       primaryColor: const Color.fromARGB(255, 31, 31, 31),
     ),
-    home: const LoginView(),
+    home: const HomePage(),
     routes: {
-      "/login/": (context) => const LoginView(),
-      '/register/': (context) => const RegisterView(),
-      '/notes/': (context) => const NotesView()
+      loginRoute: (context) => const LoginView(),
+      registerRoute: (context) => const RegisterView(),
+      notesRoute: (context) => const NotesView()
     },
   ));
 }
@@ -40,7 +46,7 @@ class HomePage extends StatelessWidget {
               if (user.emailVerified) {
                 return const NotesView();
               } else {
-                return const LoginView();
+                return const VerifyEmailView();
               }
             } else {
               return const LoginView();

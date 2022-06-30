@@ -1,8 +1,9 @@
 import "dart:developer" as devtools show log;
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:mynotes/firebase_options.dart';
+import 'package:mynotes/constants/routes.dart';
+
+import '../main.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -28,32 +29,6 @@ class _LoginViewState extends State<LoginView> {
     _password.dispose();
     super.dispose();
   }
-
-  // FutureBuilder intialize() {
-  //   return FutureBuilder(
-  //     future: Firebase.initializeApp(
-  //       options: DefaultFirebaseOptions.currentPlatform,
-  //     ),
-  //     builder: (context, snapshot) {
-  //       switch (snapshot.connectionState) {
-  //         case ConnectionState.done:
-  //           final user = FirebaseAuth.instance.currentUser;
-  //           if (user != null) {
-  //             if (user.emailVerified) {
-  //               return const Text("");
-  //             } else {
-  //               return const Text("");
-  //             }
-  //           } else {
-  //             return const LoginView();
-  //           }
-
-  //         default:
-  //           return const CircularProgressIndicator();
-  //       }
-  //     },
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +74,7 @@ class _LoginViewState extends State<LoginView> {
             ),
 
             //Spacing
-            const SizedBox(height: 10),
+            createSpace(10),
 
             //Password
             SizedBox(
@@ -128,7 +103,8 @@ class _LoginViewState extends State<LoginView> {
               ),
             ),
 
-            const SizedBox(height: 10),
+            //Spacing
+            createSpace(10),
 
             SizedBox(
               width: sizedBoxWidth,
@@ -146,7 +122,7 @@ class _LoginViewState extends State<LoginView> {
 
                     if (!man) {} //used this to escape an error i have no idea how to fix :skull:
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                      "/notes/",
+                      notesRoute,
                       (route) => false,
                     );
                   } on FirebaseAuthException catch (e) {
@@ -163,13 +139,14 @@ class _LoginViewState extends State<LoginView> {
                 child: const Text('Login'),
               ),
             ),
+
             TextButton(
                 style: TextButton.styleFrom(
                   primary: Colors.white,
                 ),
                 onPressed: () {
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/register/',
+                    registerRoute,
                     (route) => false,
                   );
                 },

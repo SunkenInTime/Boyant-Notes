@@ -1,6 +1,9 @@
 import "dart:developer" as devtools show log;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:mynotes/constants/routes.dart';
+
+import '../main.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({Key? key}) : super(key: key);
@@ -69,7 +72,7 @@ class _RegisterViewState extends State<RegisterView> {
             ),
 
             //Spacing
-            const SizedBox(height: 10),
+            createSpace(10),
 
             //Password
             SizedBox(
@@ -98,8 +101,10 @@ class _RegisterViewState extends State<RegisterView> {
               ),
             ),
 
-            const SizedBox(height: 10),
+            //Spacing
+            createSpace(10),
 
+            //Text Button
             SizedBox(
               width: sizedBoxWidth,
               height: sizedBoxHeight,
@@ -137,7 +142,7 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
                 onPressed: () {
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/login/',
+                    loginRoute,
                     (route) => false,
                   );
                 },
