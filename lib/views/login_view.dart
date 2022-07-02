@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
 
 import '../main.dart';
+import '../utilities/show_error_dialog.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
@@ -127,16 +128,33 @@ class _LoginViewState extends State<LoginView> {
                     );
                   } on FirebaseAuthException catch (e) {
                     if (e.code == "user-not-found") {
-                      devtools.log("User not found");
+                      await showErrorDialog(
+                        context,
+                        "User not found",
+                      );
                     } else if (e.code == "wrong-password") {
-                      devtools.log("Wrong password");
+                      await showErrorDialog(
+                        context,
+                        "Wrong password",
+                      );
                     } else if (e.code == "network-request-failed") {
-                      devtools.log(
-                          "Could not connect to server check if your device is connected to the internet.");
+                      await showErrorDialog(
+                        context,
+                        "Could not connect to server check if your device is connected to the internet.",
+                      );
                     } else {
+                      await showErrorDialog(
+                        context,
+                        "Error: ${e.code}",
+                      );
                       devtools.log("Something wrong happened");
                       devtools.log(e.code);
                     }
+                  } catch (e) {
+                    await showErrorDialog(
+                      context,
+                      "Error ${e.toString()}",
+                    );
                   }
                 },
                 child: const Text('Login'),
