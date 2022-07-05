@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
 
 import '../main.dart';
+import '../utilities/show_dialog.dart';
 import '../utilities/show_error_dialog.dart';
 
 class RegisterView extends StatefulWidget {
@@ -122,6 +123,8 @@ class _RegisterViewState extends State<RegisterView> {
                               email: email, password: password);
                       final user = FirebaseAuth.instance.currentUser;
                       await user?.sendEmailVerification();
+                      showInfoDialog(context, "Email Verification",
+                          "Email verification sent");
                       devtools.log(userCredential.toString());
                     } on FirebaseAuthException catch (e) {
                       if (e.code == "email-already-in-use") {
