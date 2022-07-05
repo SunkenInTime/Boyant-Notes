@@ -2,6 +2,7 @@ import "dart:developer" as devtools show log;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
+import 'package:mynotes/views/verify_email_view.dart';
 
 import '../main.dart';
 import '../utilities/show_dialog.dart';
@@ -123,8 +124,7 @@ class _RegisterViewState extends State<RegisterView> {
                               email: email, password: password);
                       final user = FirebaseAuth.instance.currentUser;
                       await user?.sendEmailVerification();
-                      showInfoDialog(context, "Email Verification",
-                          "Email verification sent");
+                      Navigator.of(context).pushNamed(verifyRoute);
                       devtools.log(userCredential.toString());
                     } on FirebaseAuthException catch (e) {
                       if (e.code == "email-already-in-use") {
@@ -178,7 +178,7 @@ class _RegisterViewState extends State<RegisterView> {
                     (route) => false,
                   );
                 },
-                child: const Text("Login"))
+                child: const Text("Already registered? Login"))
           ],
         ),
       ),

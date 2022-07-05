@@ -24,7 +24,13 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Text(
-              "Please verify your email address:",
+              "We've alredy sent you an email verification. Please check your email in order to verify your account.",
+              textAlign: TextAlign.center,
+              style: TextStyle(color: Colors.white),
+            ),
+            createSpace(10),
+            const Text(
+              "Haven't recieved an email yet?",
               textAlign: TextAlign.center,
               style: TextStyle(color: Colors.white),
             ),
@@ -38,15 +44,16 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                 final user = FirebaseAuth.instance.currentUser;
                 await user?.sendEmailVerification();
               },
-              child: const Text("Send email"),
+              child: const Text("Resend email"),
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
                 Navigator.of(context)
-                    .pushNamedAndRemoveUntil(loginRoute, (route) => false);
+                    .pushNamedAndRemoveUntil(registerRoute, (route) => false);
+                await FirebaseAuth.instance.signOut();
               },
               child: const Text(
-                "Login",
+                "Restart",
                 style: TextStyle(color: Colors.white),
               ),
             )
