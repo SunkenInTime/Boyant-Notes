@@ -37,7 +37,7 @@ class _LoginViewState extends State<LoginView> {
   Widget build(BuildContext context) {
     const double sizedBoxWidth = 300;
     const double sizedBoxHeight = 50;
-    const man = true;
+
     //intialize();
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 31, 31, 31),
