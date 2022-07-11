@@ -1,11 +1,12 @@
 import "dart:developer" as devtools show log;
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
-import 'package:mynotes/views/verify_email_view.dart';
+import 'package:mynotes/services/auth/auth_exceptions.dart';
+import 'package:mynotes/services/auth/auth_service.dart';
 
 import '../main.dart';
-import '../utilities/show_dialog.dart';
+
 import '../utilities/show_error_dialog.dart';
 
 class RegisterView extends StatefulWidget {
@@ -119,50 +120,36 @@ class _RegisterViewState extends State<RegisterView> {
                     final email = _email.text;
                     final password = _password.text;
                     try {
-                      final userCredential = await FirebaseAuth.instance
-                          .createUserWithEmailAndPassword(
-                              email: email, password: password);
-                      final user = FirebaseAuth.instance.currentUser;
-                      await user?.sendEmailVerification();
+                      await AuthService.firebase()
+                          .createUser(email: email, password: password);
+
+                      AuthService.firebase().sendVerification();
+                      // ignore: use_build_context_synchronously
                       Navigator.of(context).pushNamed(verifyRoute);
-                      devtools.log(userCredential.toString());
-                    } on FirebaseAuthException catch (e) {
-                      if (e.code == "email-already-in-use") {
-                        await showErrorDialog(
-                          context,
-                          "Email already in use",
-                        );
-                      } else if (e.code == "network-request-failed") {
-                        await showErrorDialog(
-                          context,
-                          "Could not connect to server check if your device is connected to the internet.",
-                        );
-                        devtools.log(
-                            "Could not connect to server check if your device is connected to the internet.");
-                      } else if (e.code == "weak-password") {
-                        await showErrorDialog(
-                          context,
-                          "Weak Password",
-                        );
-                        devtools.log("Weak Password");
-                      } else if (e.code == "invalid-email") {
-                        await showErrorDialog(
-                          context,
-                          "Invalid email",
-                        );
-                        devtools.log("Invalid email");
-                      } else {
-                        await showErrorDialog(
-                          context,
-                          "Error: ${e.code}",
-                        );
-                        devtools.log("Something wrong happened");
-                        devtools.log(e.code);
-                      }
-                    } catch (e) {
+                    } on EmailAlreadyInUseAuthException {
                       await showErrorDialog(
                         context,
-                        "Error ${e.toString()}",
+                        "Email already in use",
+                      );
+                    } on ConnectionFailedAuthException {
+                      await showErrorDialog(
+                        context,
+                        "Could not connect to server check if your device is connected to the internet.",
+                      );
+                    } on WeakPasswordAuthException {
+                      await showErrorDialog(
+                        context,
+                        "Weak Password",
+                      );
+                    } on InvalidEmailAuthException {
+                      await showErrorDialog(
+                        context,
+                        "Invalid email",
+                      );
+                    } on GenericAuthException {
+                      await showErrorDialog(
+                        context,
+                        "Failed to register",
                       );
                     }
                   },

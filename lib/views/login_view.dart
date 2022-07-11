@@ -1,9 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
 import "dart:developer" as devtools show log;
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
+import 'package:mynotes/services/auth/auth_exceptions.dart';
+import 'package:mynotes/services/auth/auth_service.dart';
 
 import '../main.dart';
 import '../utilities/show_error_dialog.dart';
@@ -120,11 +122,14 @@ class _LoginViewState extends State<LoginView> {
                   final email = _email.text;
                   final password = _password.text;
                   try {
-                    await FirebaseAuth.instance.signInWithEmailAndPassword(
-                        email: email, password: password);
+                    AuthService.firebase().logIn(
+                      email: email,
+                      password: password,
+                    );
 
-                    final user = FirebaseAuth.instance.currentUser;
-                    if (user?.emailVerified ?? false) {
+                    final user = AuthService.firebase().currentUser;
+                    if (user?.isEmailVerified ?? false) {
+                      print(user?.isEmailVerified);
                       Navigator.of(context).pushNamedAndRemoveUntil(
                         notesRoute,
                         (route) => false,
@@ -135,34 +140,25 @@ class _LoginViewState extends State<LoginView> {
                         (route) => false,
                       );
                     }
-                  } on FirebaseAuthException catch (e) {
-                    if (e.code == "user-not-found") {
-                      await showErrorDialog(
-                        context,
-                        "User not found",
-                      );
-                    } else if (e.code == "wrong-password") {
-                      await showErrorDialog(
-                        context,
-                        "Wrong password",
-                      );
-                    } else if (e.code == "network-request-failed") {
-                      await showErrorDialog(
-                        context,
-                        "Could not connect to server check if your device is connected to the internet.",
-                      );
-                    } else {
-                      await showErrorDialog(
-                        context,
-                        "Error: ${e.code}",
-                      );
-                      devtools.log("Something wrong happened");
-                      devtools.log(e.code);
-                    }
-                  } catch (e) {
+                  } on UserNotFoundAuthException {
                     await showErrorDialog(
                       context,
-                      "Error ${e.toString()}",
+                      "User not found",
+                    );
+                  } on WrongPasswordAuthException {
+                    await showErrorDialog(
+                      context,
+                      "Wrong password",
+                    );
+                  } on ConnectionFailedAuthException {
+                    await showErrorDialog(
+                      context,
+                      "Could not connect to server check if your device is connected to the internet.",
+                    );
+                  } on GenericAuthException {
+                    await showErrorDialog(
+                      context,
+                      "Authentication error",
                     );
                   }
                 },

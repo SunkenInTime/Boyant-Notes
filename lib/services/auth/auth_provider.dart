@@ -1,9 +1,7 @@
-import 'dart:ffi';
-
 import 'package:mynotes/services/auth/auth_user.dart';
-import "dart:developer" as devtools show log;
 
 abstract class AuthProvider {
+  Future<void> initialize();
   AuthUser? get currentUser;
 
   Future<AuthUser> logIn({
