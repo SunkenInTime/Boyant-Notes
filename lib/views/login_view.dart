@@ -2,6 +2,7 @@
 
 import "dart:developer" as devtools show log;
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
 import 'package:mynotes/services/auth/auth_exceptions.dart';
@@ -122,14 +123,14 @@ class _LoginViewState extends State<LoginView> {
                   final email = _email.text;
                   final password = _password.text;
                   try {
-                    AuthService.firebase().logIn(
+                    await AuthService.firebase().logIn(
                       email: email,
                       password: password,
                     );
 
                     final user = AuthService.firebase().currentUser;
+
                     if (user?.isEmailVerified ?? false) {
-                      print(user?.isEmailVerified);
                       Navigator.of(context).pushNamedAndRemoveUntil(
                         notesRoute,
                         (route) => false,

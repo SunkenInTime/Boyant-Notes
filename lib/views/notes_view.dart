@@ -29,6 +29,7 @@ class _NotesViewState extends State<NotesView> {
                   final shouldLogout = await showLogOutDialog(context);
                   devtools.log(shouldLogout.toString());
                   if (shouldLogout) {
+                    devtools.log("Logging out");
                     await AuthService.firebase().logOut();
                     if (!man) {} //used this to escape an error i have no idea how to fix :skull:
                     Navigator.of(context).pushNamedAndRemoveUntil(

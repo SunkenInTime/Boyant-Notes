@@ -5,6 +5,7 @@ import "package:mynotes/services/auth/auth_exceptions.dart";
 import "package:mynotes/services/auth/auth_provider.dart";
 import "package:firebase_auth/firebase_auth.dart"
     show FirebaseAuth, FirebaseAuthException;
+import "dart:developer" as devtools show log;
 
 class FirebaseAuthProvider implements AuthProvider {
   @override
@@ -24,8 +25,9 @@ class FirebaseAuthProvider implements AuthProvider {
         throw UserNotFoundAuthException();
       }
     } on FirebaseAuthException catch (e) {
+      devtools.log(e.code);
       if (e.code == "email-already-in-use") {
-        throw WeakPasswordAuthException();
+        throw EmailAlreadyInUseAuthException();
       } else if (e.code == "network-request-failed") {
         throw ConnectionFailedAuthException();
       } else if (e.code == "weak-password") {
@@ -89,7 +91,6 @@ class FirebaseAuthProvider implements AuthProvider {
     } else {
       throw UserNotLoggedInAuthException();
     }
-    throw UnimplementedError();
   }
 
   @override
