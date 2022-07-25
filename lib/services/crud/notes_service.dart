@@ -1,7 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart' show join;
+import 'package:path/path.dart';
 
 const dbName = "notes.db";
 const noteTable = "note";
@@ -20,8 +21,23 @@ class DatabaseIsNotOpen implements Exception {}
 
 class CouldNotDeleteUser implements Exception {}
 
+class UserAlreadyExists implements Exception {}
+
 class NotesService {
   Database? _db;
+
+  Future<DatabaseUser> createUser({required String email}) async {
+    final db = _getDatabaseOrThrow();
+    final results = db.query(
+      userTable,
+      limit: 1,
+      where: "email = ?",
+      whereArgs: [email.toLowerCase()],
+    );
+    if (results.isNotEmpty) {
+      throw UserAlreadyExists();
+    }
+  }
 
   Future<void> deleteUser({required String email}) async {
     final db = _getDatabaseOrThrow();
