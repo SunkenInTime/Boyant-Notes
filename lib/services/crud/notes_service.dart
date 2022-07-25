@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
+import "dart:core";
 
 const dbName = "notes.db";
 const noteTable = "note";
@@ -28,12 +29,13 @@ class NotesService {
 
   Future<DatabaseUser> createUser({required String email}) async {
     final db = _getDatabaseOrThrow();
-    final results = db.query(
+    final results = await db.query(
       userTable,
       limit: 1,
       where: "email = ?",
       whereArgs: [email.toLowerCase()],
     );
+
     if (results.isNotEmpty) {
       throw UserAlreadyExists();
     }
