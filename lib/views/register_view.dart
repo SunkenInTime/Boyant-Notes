@@ -1,5 +1,3 @@
-import "dart:developer" as devtools show log;
-
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
 import 'package:mynotes/services/auth/auth_exceptions.dart';
