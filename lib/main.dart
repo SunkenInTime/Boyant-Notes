@@ -12,7 +12,7 @@ import "dart:developer" as devtools show log;
 
 const double sizedBoxWidth = 300;
 const double sizedBoxHeight = 300;
-
+const Color themeColor = Color.fromARGB(255, 107, 65, 114);
 //Creates an empty sized box for sapce
 SizedBox createSpace(double height) {
   return SizedBox(height: height);
