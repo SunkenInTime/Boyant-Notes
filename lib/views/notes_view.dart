@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
+import 'package:mynotes/main.dart';
 import 'package:mynotes/services/auth/auth_service.dart';
 import "dart:developer" as devtools show log;
 import '../enums/menu_action.dart';
@@ -20,7 +21,7 @@ class _NotesViewState extends State<NotesView> {
       backgroundColor: const Color.fromARGB(255, 31, 31, 31),
       appBar: AppBar(
         title: const Text("Your Notes"),
-        backgroundColor: const Color.fromARGB(255, 107, 65, 114),
+        backgroundColor: themeColor,
         actions: [
           PopupMenuButton<MenuAction>(
             onSelected: (value) async {

@@ -17,7 +17,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
       backgroundColor: const Color.fromARGB(255, 31, 31, 31),
       appBar: AppBar(
         title: const Text("Home"),
-        backgroundColor: const Color.fromARGB(255, 107, 65, 114),
+        backgroundColor: themeColor,
       ),
       body: Center(
         child: Column(
@@ -38,7 +38,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
             TextButton(
               style: TextButton.styleFrom(
                 primary: Colors.white,
-                backgroundColor: const Color.fromARGB(255, 107, 65, 114),
+                backgroundColor: themeColor,
               ),
               onPressed: () async {
                 await AuthService.firebase().sendVerification();

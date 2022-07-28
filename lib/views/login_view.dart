@@ -43,7 +43,7 @@ class _LoginViewState extends State<LoginView> {
       backgroundColor: const Color.fromARGB(255, 31, 31, 31),
       appBar: AppBar(
         title: const Text("Login"),
-        backgroundColor: const Color.fromARGB(255, 107, 65, 114),
+        backgroundColor: themeColor,
       ),
       body: Center(
         child: Column(
@@ -114,8 +114,7 @@ class _LoginViewState extends State<LoginView> {
               height: sizedBoxHeight,
               child: TextButton(
                 style: TextButton.styleFrom(
-                    primary: Colors.white,
-                    backgroundColor: const Color.fromARGB(255, 107, 65, 114)),
+                    primary: Colors.white, backgroundColor: themeColor),
                 onPressed: () async {
                   final email = _email.text;
                   final password = _password.text;
