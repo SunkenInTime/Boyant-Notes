@@ -13,6 +13,7 @@ import "dart:developer" as devtools show log;
 const double sizedBoxWidth = 300;
 const double sizedBoxHeight = 300;
 const Color themeColor = Color.fromARGB(255, 107, 65, 114);
+dynamic loadingCircle;
 //Creates an empty sized box for sapce
 SizedBox createSpace(double height) {
   return SizedBox(height: height);
@@ -58,9 +59,7 @@ class HomePage extends StatelessWidget {
             }
 
           default:
-            dynamic loadingCircle;
             if (Platform.isIOS) {
-              devtools.log("We are on IOS");
               loadingCircle = const CupertinoActivityIndicator();
             } else {
               loadingCircle = const CircularProgressIndicator();

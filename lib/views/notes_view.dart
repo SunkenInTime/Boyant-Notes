@@ -34,42 +34,72 @@ class _NotesViewState extends State<NotesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 31, 31, 31),
-      appBar: AppBar(
-        title: const Text("Your Notes"),
-        backgroundColor: themeColor,
-        actions: [
-          PopupMenuButton<MenuAction>(
-            onSelected: (value) async {
-              switch (value) {
-                case MenuAction.logout:
-                  final shouldLogout = await showLogOutDialog(context);
-                  devtools.log(shouldLogout.toString());
-                  if (shouldLogout) {
-                    devtools.log("Logging out");
-                    await AuthService.firebase().logOut();
-                    if (!man) {} //used this to escape an error i have no idea how to fix :skull:
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      loginRoute,
-                      (_) => false,
-                    );
-                  }
-                  break;
-              }
-            },
-            itemBuilder: (context) {
-              return const [
-                PopupMenuItem<MenuAction>(
-                  value: MenuAction.logout,
-                  child: Text("Log out"),
-                )
-              ];
-            },
-          )
-        ],
-      ),
-      body: const Text("Hello world"),
-    );
+        backgroundColor: const Color.fromARGB(255, 31, 31, 31),
+        appBar: AppBar(
+          title: const Text("Your Notes"),
+          backgroundColor: themeColor,
+          actions: [
+            PopupMenuButton<MenuAction>(
+              onSelected: (value) async {
+                switch (value) {
+                  case MenuAction.logout:
+                    final shouldLogout = await showLogOutDialog(context);
+                    devtools.log(shouldLogout.toString());
+                    if (shouldLogout) {
+                      devtools.log("Logging out");
+                      await AuthService.firebase().logOut();
+                      if (!man) {} //used this to escape an error i have no idea how to fix :skull:
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                        loginRoute,
+                        (_) => false,
+                      );
+                    }
+                    break;
+                }
+              },
+              itemBuilder: (context) {
+                return const [
+                  PopupMenuItem<MenuAction>(
+                    value: MenuAction.logout,
+                    child: Text("Log out"),
+                  )
+                ];
+              },
+            )
+          ],
+        ),
+        body: FutureBuilder(
+          future: _notesService.getOrCreateUser(email: userEmail),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.done:
+                return StreamBuilder(
+                    stream: _notesService.allNotes,
+                    builder: (context, snapshot) {
+                      switch (snapshot.connectionState) {
+                        case ConnectionState.waiting:
+                          return const Text("Notes here");
+                        default:
+                          return Center(
+                            child: SizedBox(
+                              width: sizedBoxWidth,
+                              height: sizedBoxHeight,
+                              child: Center(child: loadingCircle),
+                            ),
+                          );
+                      }
+                    });
+              default:
+                return Center(
+                  child: SizedBox(
+                    width: sizedBoxWidth,
+                    height: sizedBoxHeight,
+                    child: Center(child: loadingCircle),
+                  ),
+                );
+            }
+          },
+        ));
   }
 }
 
