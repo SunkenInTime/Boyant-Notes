@@ -37,7 +37,7 @@ class _RegisterViewState extends State<RegisterView> {
     const double sizedBoxWidth = 300;
     const double sizedBoxHeight = 50;
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 31, 31, 31),
+      backgroundColor: bgColor,
       appBar: AppBar(
         title: const Text("Register"),
         backgroundColor: themeColor,

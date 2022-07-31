@@ -34,7 +34,7 @@ class _NotesViewState extends State<NotesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: const Color.fromARGB(255, 31, 31, 31),
+        backgroundColor: bgColor,
         appBar: AppBar(
           title: const Text("Your Notes"),
           backgroundColor: themeColor,
@@ -85,6 +85,8 @@ class _NotesViewState extends State<NotesView> {
                       switch (snapshot.connectionState) {
                         case ConnectionState.waiting:
                           return const Text("Notes here");
+                        case ConnectionState.active:
+
                         default:
                           return Center(
                             child: SizedBox(
