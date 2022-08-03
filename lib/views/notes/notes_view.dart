@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:mynotes/constants/routes.dart';
-import 'package:mynotes/main.dart';
-import 'package:mynotes/services/auth/auth_service.dart';
-import 'package:mynotes/services/crud/notes_service.dart';
-import 'package:mynotes/views/notes/notes_list_view.dart';
-import "dart:developer" as devtools show log;
+import '../../constants/routes.dart';
 import '../../enums/menu_action.dart';
+import '../../main.dart';
+import '../../services/auth/auth_service.dart';
+import '../../services/crud/notes_service.dart';
+import 'notes_list_view.dart';
+import '../main_ui.dart';
 
 class NotesView extends StatefulWidget {
   const NotesView({Key? key}) : super(key: key);
@@ -13,8 +13,6 @@ class NotesView extends StatefulWidget {
   @override
   State<NotesView> createState() => _NotesViewState();
 }
-
-const man = true;
 
 class _NotesViewState extends State<NotesView> {
   late final NotesService _notesService;
@@ -45,9 +43,8 @@ class _NotesViewState extends State<NotesView> {
               switch (value) {
                 case MenuAction.logout:
                   final shouldLogout = await showLogOutDialog(context);
-                  devtools.log(shouldLogout.toString());
+
                   if (shouldLogout) {
-                    devtools.log("Logging out");
                     await AuthService.firebase().logOut();
                     if (!man) {} //used this to escape an error i have no idea how to fix :skull:
                     Navigator.of(context).pushNamedAndRemoveUntil(
@@ -120,54 +117,6 @@ class _NotesViewState extends State<NotesView> {
           }
         },
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        unselectedItemColor: Colors.white,
-        fixedColor: Colors.white,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.notes_rounded,
-              color: Colors.white,
-            ),
-            label: "Notes",
-            backgroundColor: Colors.white,
-          ),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.checklist,
-                color: Colors.white,
-              ),
-              label: "Todo List",
-              backgroundColor: themeColor),
-        ],
-        backgroundColor: themeColor,
-      ),
     );
   }
-}
-
-Future<bool> showLogOutDialog(BuildContext context) {
-  return showDialog(
-    context: context,
-    builder: (context) {
-      return AlertDialog(
-        title: const Text("Sign out"),
-        content: const Text("Are you sure you want to sign out"),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(false);
-            },
-            child: const Text("Cancel"),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(true);
-            },
-            child: const Text("Log out"),
-          )
-        ],
-      );
-    },
-  ).then((value) => value ?? false);
 }

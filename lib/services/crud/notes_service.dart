@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
 
 import 'package:flutter/cupertino.dart';
 import 'package:sqflite/sqflite.dart';
@@ -25,7 +24,7 @@ const createNoteTable = '''CREATE TABLE IF NOT EXISTS "note" (
         "id"	INTEGER NOT NULL,
         "user_id"	INTEGER NOT NULL,
         "text"	TEXT,
-        "is_synced"	INTEGER DEFAULT 0,
+        "is_synced"	INTEGER NOT NULL DEFAULT 0,
         FOREIGN KEY("user_id") REFERENCES "user"("id"),
         PRIMARY KEY("id" AUTOINCREMENT)
       );''';
@@ -200,9 +199,9 @@ class NotesService {
 
     if (results.isEmpty) {
       throw CouldNotFindUser();
+    } else {
+      return DatabaseUser.fromRow(results.first);
     }
-
-    return DatabaseUser.fromRow(results.first);
   }
 
   Future<DatabaseUser> createUser({required String email}) async {
