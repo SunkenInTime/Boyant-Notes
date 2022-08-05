@@ -81,7 +81,6 @@ class NotesService {
 
     //make sure note exists
     await getNote(id: note.id);
-
     //update the database
     final updatesCount = await db.update(noteTable, {
       textColumn: text,
