@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:mynotes/utilities/show_dialog.dart';
+import 'package:mynotes/utilities/dialogs/show_dialog.dart';
 
 Future<bool> showDeleteDialog(BuildContext context) {
   return showGenericDialog(
