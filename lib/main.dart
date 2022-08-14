@@ -15,6 +15,7 @@ const double sizedBoxHeight = 300;
 const Color themeColor = Color.fromARGB(255, 107, 65, 114);
 const Color bgColor = Color.fromARGB(255, 31, 31, 31);
 dynamic loadingCircle;
+late Icon shareIcon;
 //Creates an empty sized box for sapce
 SizedBox createSpace(double height) {
   return SizedBox(height: height);
@@ -64,8 +65,10 @@ class HomePage extends StatelessWidget {
           default:
             if (Platform.isIOS) {
               loadingCircle = const CupertinoActivityIndicator();
+              shareIcon = const Icon(Icons.ios_share);
             } else {
               loadingCircle = const CircularProgressIndicator();
+              shareIcon = const Icon(Icons.share);
             }
             return Scaffold(
               backgroundColor: const Color.fromARGB(255, 180, 180, 180),
