@@ -3,7 +3,7 @@ import 'package:mynotes/main.dart';
 import 'package:mynotes/services/auth/auth_service.dart';
 import 'package:mynotes/services/cloud/firebase_cloud_storage.dart';
 import 'package:mynotes/utilities/Generics/get_arguments.dart';
-import 'package:mynotes/services/cloud/cloud_note.dart';
+import 'package:mynotes/services/cloud/note/cloud_note.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../utilities/dialogs/cannot_share_empty_note_dialog.dart';

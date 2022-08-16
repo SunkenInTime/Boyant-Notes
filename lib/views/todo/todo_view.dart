@@ -22,6 +22,10 @@ class _TodoViewState extends State<TodoView> {
         title: const Text("Todo"),
         backgroundColor: themeColor,
         actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.add),
+          ),
           PopupMenuButton<MenuAction>(
             onSelected: (value) async {
               switch (value) {
@@ -47,7 +51,7 @@ class _TodoViewState extends State<TodoView> {
                 )
               ];
             },
-          )
+          ),
         ],
       ),
       body: const Center(
@@ -56,6 +60,12 @@ class _TodoViewState extends State<TodoView> {
           style: TextStyle(color: Colors.white),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (() {}),
+        backgroundColor: themeColor,
+        child: const Icon(Icons.add),
+      ),
+      //floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
