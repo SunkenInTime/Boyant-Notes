@@ -21,6 +21,13 @@ SizedBox createSpace(double height) {
   return SizedBox(height: height);
 }
 
+SizedBox createSpaceWidth(double height, double width) {
+  return SizedBox(
+    height: height,
+    width: width,
+  );
+}
+
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MaterialApp(
