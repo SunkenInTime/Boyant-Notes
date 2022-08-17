@@ -33,6 +33,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
       return;
     }
     final text = _textController.text;
+
     await _notesService.updateNote(documentId: note.doucumentId, text: text);
   }
 
