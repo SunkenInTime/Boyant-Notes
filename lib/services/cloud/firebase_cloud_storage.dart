@@ -121,7 +121,7 @@ class FirebaseCloudStorage {
     });
     final fetchedNote = await document.get();
     return CloudNote(
-      doucumentId: fetchedNote.id,
+      documentId: fetchedNote.id,
       ownerUserId: ownerUserId,
       text: "",
     );

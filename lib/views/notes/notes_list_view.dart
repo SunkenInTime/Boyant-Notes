@@ -22,27 +22,50 @@ class NotesListView extends StatelessWidget {
       itemCount: notes.length,
       itemBuilder: (context, index) {
         final note = notes.elementAt(index);
-        return ListTile(
-          onTap: () {
-            onTap(note);
+        return Dismissible(
+          direction: DismissDirection.endToStart,
+          key: Key(note.documentId),
+          onDismissed: (direction) async {
+            onDeleteNote(note);
           },
-          title: Text(
-            note.text,
-            style: const TextStyle(color: Colors.white),
-            maxLines: 1,
-            softWrap: true,
-            overflow: TextOverflow.ellipsis,
+          confirmDismiss: (direction) async {
+            return await showDeleteDialog(context);
+          },
+          background: Container(
+            color: Colors.red.shade700,
+            child: Align(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: const [
+                  Icon(
+                    Icons.delete_forever,
+                    color: Colors.white,
+                  ),
+                  Text(
+                    " Delete",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    textAlign: TextAlign.right,
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                ],
+              ),
+            ),
           ),
-          trailing: IconButton(
-            onPressed: () async {
-              final shouldDelete = await showDeleteDialog(context);
-              if (shouldDelete) {
-                onDeleteNote(note);
-              }
+          child: ListTile(
+            onTap: () {
+              onTap(note);
             },
-            icon: const Icon(
-              Icons.delete,
-              color: Color.fromARGB(255, 102, 102, 102),
+            title: Text(
+              note.text,
+              style: const TextStyle(color: Colors.white),
+              maxLines: 1,
+              softWrap: true,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         );

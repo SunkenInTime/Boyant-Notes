@@ -34,7 +34,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
     }
     final text = _textController.text;
 
-    await _notesService.updateNote(documentId: note.doucumentId, text: text);
+    await _notesService.updateNote(documentId: note.documentId, text: text);
   }
 
   void _setupTextControllerListener() {
@@ -65,7 +65,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
   void _deleteNoteIfTextIsEmpty() {
     final note = _note;
     if (_textController.text.isEmpty && note != null) {
-      _notesService.deleteNote(documentId: note.doucumentId);
+      _notesService.deleteNote(documentId: note.documentId);
     }
   }
 
@@ -74,7 +74,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
     final text = _textController.text;
     if (note != null && text.isNotEmpty) {
       await _notesService.updateNote(
-        documentId: note.doucumentId,
+        documentId: note.documentId,
         text: text,
       );
     }
