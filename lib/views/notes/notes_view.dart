@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:mynotes/services/auth/bloc/auth_bloc.dart';
+import 'package:mynotes/services/auth/bloc/auth_event.dart';
 import 'package:mynotes/services/cloud/note/cloud_note.dart';
 import 'package:mynotes/services/cloud/firebase_cloud_storage.dart';
 import '../../constants/routes.dart';
 import '../../enums/menu_action.dart';
 import '../../main.dart';
 import '../../services/auth/auth_service.dart';
-import "dart:developer" as devtools show log;
 import 'notes_list_view.dart';
 import '../main_ui.dart';
 
@@ -49,12 +51,12 @@ class _NotesViewState extends State<NotesView> {
                     final shouldLogout = await showLogOutDialog(context);
 
                     if (shouldLogout) {
-                      await AuthService.firebase().logOut();
-                      if (!man) {} //used this to escape an error i have no idea how to fix :skull:
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                        loginRoute,
-                        (_) => false,
-                      );
+                      // Used to make sure I don't use build context accross async gaps
+                      if (!mounted) return;
+
+                      context.read<AuthBloc>().add(
+                            const AuthEventLogOut(),
+                          );
                     }
                     break;
                 }
