@@ -135,7 +135,7 @@ class _TodoViewState extends State<TodoView> {
   showTextAreaSheet(BuildContext context) async {
     final currentUser = AuthService.firebase().currentUser!;
     final userId = currentUser.id;
-
+    bool isClicked = false;
     showModalBottomSheet(
         isScrollControlled: true,
         isDismissible: true,
@@ -179,17 +179,21 @@ class _TodoViewState extends State<TodoView> {
                     children: [
                       TextButton(
                           onPressed: () async {
-                            final CloudTodo todo = await _todoService
-                                .createNewTodo(ownerUserId: userId);
                             final title = _titleController.text;
                             final description = _descriptionController.text;
-                            await _todoService.updateTodo(
-                                documentId: todo.documentId,
-                                title: title,
-                                description: description);
-                            Navigator.pop(context);
-                            _titleController.text = "";
-                            _descriptionController.text = "";
+                            if (title != "" && isClicked == false) {
+                              isClicked = true;
+                              final CloudTodo todo = await _todoService
+                                  .createNewTodo(ownerUserId: userId);
+
+                              await _todoService.updateTodo(
+                                  documentId: todo.documentId,
+                                  title: title,
+                                  description: description);
+                              Navigator.pop(context);
+                              _titleController.text = "";
+                              _descriptionController.text = "";
+                            }
                           },
                           child: const Text("Save")),
                     ],
