@@ -121,10 +121,7 @@ class _RegisterViewState extends State<RegisterView> {
                           .createUser(email: email, password: password);
 
                       AuthService.firebase().sendVerification();
-
-                      // Used to make sure I don't use build context accross async gaps
-                      if (!mounted) return;
-
+                      // ignore: use_build_context_synchronously
                       Navigator.of(context).pushNamed(verifyRoute);
                     } on EmailAlreadyInUseAuthException {
                       await showErrorDialog(
