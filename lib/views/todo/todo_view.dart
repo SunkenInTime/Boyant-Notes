@@ -90,7 +90,7 @@ class _TodoViewState extends State<TodoView> {
                     await _todoService.deleteTodo(documentId: todo.documentId);
                   },
                   onTap: (todo) {
-                    print("");
+                    showTextAreaSheet(context, todo);
                   },
                   onCheckTrue: (todo) async {
                     await _todoService.checkTodo(
@@ -123,7 +123,7 @@ class _TodoViewState extends State<TodoView> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: (() {
-          showTextAreaSheet(context);
+          showTextAreaSheet(context, null);
         }),
         backgroundColor: themeColor,
         child: const Icon(Icons.add),
@@ -132,10 +132,17 @@ class _TodoViewState extends State<TodoView> {
     );
   }
 
-  showTextAreaSheet(BuildContext context) async {
+  showTextAreaSheet(BuildContext context, CloudTodo? isExistingTodo) async {
     final currentUser = AuthService.firebase().currentUser!;
     final userId = currentUser.id;
     bool isClicked = false;
+    if (isExistingTodo != null) {
+      _titleController.text = isExistingTodo.title;
+      _descriptionController.text = isExistingTodo.description;
+    } else {
+      _titleController.text = "";
+      _descriptionController.text = "";
+    }
     showModalBottomSheet(
         isScrollControlled: true,
         isDismissible: true,
@@ -181,18 +188,28 @@ class _TodoViewState extends State<TodoView> {
                           onPressed: () async {
                             final title = _titleController.text;
                             final description = _descriptionController.text;
+                            //Makes sure you can't input empty text
                             if (title != "" && isClicked == false) {
                               isClicked = true;
-                              final CloudTodo todo = await _todoService
-                                  .createNewTodo(ownerUserId: userId);
 
-                              await _todoService.updateTodo(
-                                  documentId: todo.documentId,
-                                  title: title,
-                                  description: description);
-                              Navigator.pop(context);
-                              _titleController.text = "";
-                              _descriptionController.text = "";
+                              if (isExistingTodo != null) {
+                                final CloudTodo todo = isExistingTodo;
+
+                                Navigator.pop(context);
+                                await _todoService.updateTodo(
+                                    documentId: todo.documentId,
+                                    title: title,
+                                    description: description);
+                              } else {
+                                final CloudTodo todo = await _todoService
+                                    .createNewTodo(ownerUserId: userId);
+
+                                Navigator.pop(context);
+                                await _todoService.updateTodo(
+                                    documentId: todo.documentId,
+                                    title: title,
+                                    description: description);
+                              }
                             }
                           },
                           child: const Text("Save")),
