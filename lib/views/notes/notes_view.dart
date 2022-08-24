@@ -5,7 +5,6 @@ import '../../constants/routes.dart';
 import '../../enums/menu_action.dart';
 import '../../main.dart';
 import '../../services/auth/auth_service.dart';
-import "dart:developer" as devtools show log;
 import 'notes_list_view.dart';
 import '../main_ui.dart';
 
