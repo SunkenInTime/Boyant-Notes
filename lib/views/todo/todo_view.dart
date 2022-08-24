@@ -1,5 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:mynotes/services/cloud/firebase_cloud_storage.dart';
 import 'package:mynotes/views/todo/todo_list_view.dart';
@@ -190,6 +188,10 @@ class _TodoViewState extends State<TodoView> {
                                   documentId: todo.documentId,
                                   title: title,
                                   description: description);
+
+                              // Used to make sure I don't use build context accross async gaps
+                              if (!mounted) return;
+
                               Navigator.pop(context);
                               _titleController.text = "";
                               _descriptionController.text = "";
