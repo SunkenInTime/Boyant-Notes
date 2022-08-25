@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mynotes/main.dart';
 import 'package:mynotes/services/cloud/note/cloud_note.dart';
 import '../../utilities/dialogs/delete_dialog.dart';
 
@@ -62,7 +63,7 @@ class NotesListView extends StatelessWidget {
             },
             title: Text(
               note.text,
-              style: const TextStyle(color: Colors.white),
+              style: const TextStyle(color: defTextColor),
               maxLines: 1,
               softWrap: true,
               overflow: TextOverflow.ellipsis,

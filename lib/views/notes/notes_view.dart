@@ -30,7 +30,10 @@ class _NotesViewState extends State<NotesView> {
     return Scaffold(
         backgroundColor: bgColor,
         appBar: AppBar(
-          title: const Text("Your Notes"),
+          title: const Text(
+            "Your Notes",
+            style: TextStyle(color: defTextColor),
+          ),
           backgroundColor: themeColor,
           actions: [
             IconButton(

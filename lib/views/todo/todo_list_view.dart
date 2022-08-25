@@ -35,7 +35,7 @@ class TodoListView extends StatelessWidget {
           textColor = Colors.white54;
         } else {
           textDecoration = TextDecoration.none;
-          textColor = Colors.white;
+          textColor = defTextColor;
         }
 
         if (todo.description != "") {
