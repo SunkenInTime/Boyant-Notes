@@ -11,8 +11,6 @@ import 'package:mynotes/views/register_view.dart';
 import 'package:mynotes/views/verify_email_view.dart';
 import "dart:developer" as devtools show log;
 
-import 'package:path/path.dart';
-
 const double sizedBoxWidth = 300;
 const double sizedBoxHeight = 300;
 
@@ -45,6 +43,7 @@ void main() {
         secondaryHeaderColor: themeColor,
         unselectedWidgetColor: const Color.fromARGB(255, 102, 102, 102),
         iconTheme: const IconThemeData(color: Colors.grey)),
+    debugShowCheckedModeBanner: false,
     home: const HomePage(),
     routes: {
       loginRoute: (context) => const LoginView(),

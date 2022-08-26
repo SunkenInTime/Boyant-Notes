@@ -46,148 +46,150 @@ class _LoginViewState extends State<LoginView> {
         backgroundColor: themeColor,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            //Email
-            SizedBox(
-              width: sizedBoxWidth,
-              height: sizedBoxHeight,
-              child: TextField(
-                controller: _email,
-                enableSuggestions: true,
-                autocorrect: false,
-                keyboardType: TextInputType.emailAddress,
-                style: const TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
-                decoration: const InputDecoration(
-                  hintText: "Email",
-                  hintStyle: TextStyle(color: Colors.white),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blue, width: 2),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              //Email
+              SizedBox(
+                width: sizedBoxWidth,
+                height: sizedBoxHeight,
+                child: TextField(
+                  controller: _email,
+                  enableSuggestions: true,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  style: const TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,
+                  decoration: const InputDecoration(
+                    hintText: "Email",
+                    hintStyle: TextStyle(color: Colors.white),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue, width: 2),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Color.fromARGB(255, 167, 167, 167), width: 2),
+                    ),
+                    border: OutlineInputBorder(),
+                    //focusedBorder:OutlineInputBorder(borderSide: BorderSide(width: 1))
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: Color.fromARGB(255, 167, 167, 167), width: 2),
-                  ),
-                  border: OutlineInputBorder(),
-                  //focusedBorder:OutlineInputBorder(borderSide: BorderSide(width: 1))
                 ),
               ),
-            ),
 
-            //Spacing
-            createSpace(10),
+              //Spacing
+              createSpace(10),
 
-            //Password
-            SizedBox(
-              width: sizedBoxWidth,
-              height: sizedBoxHeight,
-              child: TextField(
-                obscureText: true,
-                enableSuggestions: false,
-                autocorrect: false,
-                controller: _password,
-                style: const TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
-                decoration: const InputDecoration(
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(),
-                  hintText: "Password",
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blue, width: 2),
+              //Password
+              SizedBox(
+                width: sizedBoxWidth,
+                height: sizedBoxHeight,
+                child: TextField(
+                  obscureText: true,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  controller: _password,
+                  style: const TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,
+                  decoration: const InputDecoration(
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(),
+                    hintText: "Password",
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue, width: 2),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Color.fromARGB(255, 167, 167, 167), width: 2),
+                    ),
+                    hintStyle: TextStyle(color: Colors.white),
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: Color.fromARGB(255, 167, 167, 167), width: 2),
-                  ),
-                  hintStyle: TextStyle(color: Colors.white),
                 ),
               ),
-            ),
 
-            //Spacing
-            createSpace(10),
+              //Spacing
+              createSpace(10),
 
-            SizedBox(
-              width: sizedBoxWidth,
-              height: sizedBoxHeight,
-              child: TextButton(
-                style: TextButton.styleFrom(
-                    primary: Colors.white, backgroundColor: themeColor),
-                onPressed: () async {
-                  final email = _email.text;
-                  final password = _password.text;
-                  try {
-                    await AuthService.firebase().logIn(
-                      email: email,
-                      password: password,
-                    );
-
-                    final user = AuthService.firebase().currentUser;
-
-                    if (user?.isEmailVerified ?? false) {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                        notesRoute,
-                        (route) => false,
+              SizedBox(
+                width: sizedBoxWidth,
+                height: sizedBoxHeight,
+                child: TextButton(
+                  style: TextButton.styleFrom(
+                      primary: Colors.white, backgroundColor: themeColor),
+                  onPressed: () async {
+                    final email = _email.text;
+                    final password = _password.text;
+                    try {
+                      await AuthService.firebase().logIn(
+                        email: email,
+                        password: password,
                       );
-                    } else {
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                        verifyRoute,
-                        (route) => false,
+
+                      final user = AuthService.firebase().currentUser;
+
+                      if (user?.isEmailVerified ?? false) {
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                          notesRoute,
+                          (route) => false,
+                        );
+                      } else {
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                          verifyRoute,
+                          (route) => false,
+                        );
+                      }
+                    } on UserNotFoundAuthException {
+                      await showErrorDialog(
+                        context,
+                        "User not found",
+                      );
+                    } on WrongPasswordAuthException {
+                      await showErrorDialog(
+                        context,
+                        "Wrong password",
+                      );
+                    } on ConnectionFailedAuthException {
+                      await showErrorDialog(
+                        context,
+                        "Could not connect to server check if your device is connected to the internet.",
+                      );
+                    } on GenericAuthException {
+                      await showErrorDialog(
+                        context,
+                        "Authentication error",
                       );
                     }
-                  } on UserNotFoundAuthException {
-                    await showErrorDialog(
-                      context,
-                      "User not found",
-                    );
-                  } on WrongPasswordAuthException {
-                    await showErrorDialog(
-                      context,
-                      "Wrong password",
-                    );
-                  } on ConnectionFailedAuthException {
-                    await showErrorDialog(
-                      context,
-                      "Could not connect to server check if your device is connected to the internet.",
-                    );
-                  } on GenericAuthException {
-                    await showErrorDialog(
-                      context,
-                      "Authentication error",
-                    );
-                  }
+                  },
+                  child: const Text('Login'),
+                ),
+              ),
+
+              TextButton(
+                style: TextButton.styleFrom(
+                  primary: defTextColor,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pushNamedAndRemoveUntil(
+                    registerRoute,
+                    (route) => false,
+                  );
                 },
-                child: const Text('Login'),
+                child: const Text("Not signed up?"),
               ),
-            ),
 
-            TextButton(
-              style: TextButton.styleFrom(
-                primary: defTextColor,
-              ),
-              onPressed: () {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  registerRoute,
-                  (route) => false,
-                );
-              },
-              child: const Text("Not signed up?"),
-            ),
-
-            TextButton(
-              style: TextButton.styleFrom(
-                primary: defTextColor,
-              ),
-              onPressed: () {
-                Navigator.of(context).pushNamed(
-                  forgotPasswordViewRoute,
-                );
-              },
-              child: const Text("Forgot password?"),
-            )
-          ],
+              TextButton(
+                style: TextButton.styleFrom(
+                  primary: defTextColor,
+                ),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(
+                    forgotPasswordViewRoute,
+                  );
+                },
+                child: const Text("Forgot password?"),
+              )
+            ],
+          ),
         ),
       ),
     );

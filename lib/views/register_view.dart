@@ -43,127 +43,129 @@ class _RegisterViewState extends State<RegisterView> {
         backgroundColor: themeColor,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            //Email
-            SizedBox(
-              width: sizedBoxWidth,
-              height: sizedBoxHeight,
-              child: TextField(
-                controller: _email,
-                enableSuggestions: true,
-                autocorrect: false,
-                keyboardType: TextInputType.emailAddress,
-                style: const TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
-                decoration: const InputDecoration(
-                  hintText: "Email",
-                  hintStyle: TextStyle(color: Colors.white),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blue, width: 2),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              //Email
+              SizedBox(
+                width: sizedBoxWidth,
+                height: sizedBoxHeight,
+                child: TextField(
+                  controller: _email,
+                  enableSuggestions: true,
+                  autocorrect: false,
+                  keyboardType: TextInputType.emailAddress,
+                  style: const TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,
+                  decoration: const InputDecoration(
+                    hintText: "Email",
+                    hintStyle: TextStyle(color: Colors.white),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue, width: 2),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Color.fromARGB(255, 167, 167, 167), width: 2),
+                    ),
+                    border: OutlineInputBorder(),
+                    //focusedBorder:OutlineInputBorder(borderSide: BorderSide(width: 1))
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: Color.fromARGB(255, 167, 167, 167), width: 2),
-                  ),
-                  border: OutlineInputBorder(),
-                  //focusedBorder:OutlineInputBorder(borderSide: BorderSide(width: 1))
                 ),
               ),
-            ),
 
-            //Spacing
-            createSpace(10),
+              //Spacing
+              createSpace(10),
 
-            //Password
-            SizedBox(
-              width: sizedBoxWidth,
-              height: sizedBoxHeight,
-              child: TextField(
-                obscureText: true,
-                enableSuggestions: false,
-                autocorrect: false,
-                controller: _password,
-                style: const TextStyle(color: Colors.white),
-                textAlign: TextAlign.center,
-                decoration: const InputDecoration(
-                  fillColor: Colors.white,
-                  border: OutlineInputBorder(),
-                  hintText: "Password",
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.blue, width: 2),
+              //Password
+              SizedBox(
+                width: sizedBoxWidth,
+                height: sizedBoxHeight,
+                child: TextField(
+                  obscureText: true,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  controller: _password,
+                  style: const TextStyle(color: Colors.white),
+                  textAlign: TextAlign.center,
+                  decoration: const InputDecoration(
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(),
+                    hintText: "Password",
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue, width: 2),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: Color.fromARGB(255, 167, 167, 167), width: 2),
+                    ),
+                    hintStyle: TextStyle(color: Colors.white),
                   ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: Color.fromARGB(255, 167, 167, 167), width: 2),
-                  ),
-                  hintStyle: TextStyle(color: Colors.white),
                 ),
               ),
-            ),
 
-            //Spacing
-            createSpace(10),
+              //Spacing
+              createSpace(10),
 
-            //Text Button
-            SizedBox(
-              width: sizedBoxWidth,
-              height: sizedBoxHeight,
-              child: TextButton(
+              //Text Button
+              SizedBox(
+                width: sizedBoxWidth,
+                height: sizedBoxHeight,
+                child: TextButton(
+                    style: TextButton.styleFrom(
+                        primary: Colors.white, backgroundColor: themeColor),
+                    onPressed: () async {
+                      final email = _email.text;
+                      final password = _password.text;
+                      try {
+                        await AuthService.firebase()
+                            .createUser(email: email, password: password);
+
+                        AuthService.firebase().sendVerification();
+                        // ignore: use_build_context_synchronously
+                        Navigator.of(context).pushNamed(verifyRoute);
+                      } on EmailAlreadyInUseAuthException {
+                        await showErrorDialog(
+                          context,
+                          "Email already in use",
+                        );
+                      } on ConnectionFailedAuthException {
+                        await showErrorDialog(
+                          context,
+                          "Could not connect to server check if your device is connected to the internet.",
+                        );
+                      } on WeakPasswordAuthException {
+                        await showErrorDialog(
+                          context,
+                          "Weak Password",
+                        );
+                      } on InvalidEmailAuthException {
+                        await showErrorDialog(
+                          context,
+                          "Invalid email",
+                        );
+                      } on GenericAuthException {
+                        await showErrorDialog(
+                          context,
+                          "Failed to register",
+                        );
+                      }
+                    },
+                    child: const Text('Register')),
+              ),
+              TextButton(
                   style: TextButton.styleFrom(
-                      primary: Colors.white, backgroundColor: themeColor),
-                  onPressed: () async {
-                    final email = _email.text;
-                    final password = _password.text;
-                    try {
-                      await AuthService.firebase()
-                          .createUser(email: email, password: password);
-
-                      AuthService.firebase().sendVerification();
-                      // ignore: use_build_context_synchronously
-                      Navigator.of(context).pushNamed(verifyRoute);
-                    } on EmailAlreadyInUseAuthException {
-                      await showErrorDialog(
-                        context,
-                        "Email already in use",
-                      );
-                    } on ConnectionFailedAuthException {
-                      await showErrorDialog(
-                        context,
-                        "Could not connect to server check if your device is connected to the internet.",
-                      );
-                    } on WeakPasswordAuthException {
-                      await showErrorDialog(
-                        context,
-                        "Weak Password",
-                      );
-                    } on InvalidEmailAuthException {
-                      await showErrorDialog(
-                        context,
-                        "Invalid email",
-                      );
-                    } on GenericAuthException {
-                      await showErrorDialog(
-                        context,
-                        "Failed to register",
-                      );
-                    }
+                    primary: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      loginRoute,
+                      (route) => false,
+                    );
                   },
-                  child: const Text('Register')),
-            ),
-            TextButton(
-                style: TextButton.styleFrom(
-                  primary: Colors.white,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    loginRoute,
-                    (route) => false,
-                  );
-                },
-                child: const Text("Already registered? Login"))
-          ],
+                  child: const Text("Already registered? Login"))
+            ],
+          ),
         ),
       ),
     );

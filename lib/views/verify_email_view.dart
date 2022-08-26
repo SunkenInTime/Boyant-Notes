@@ -20,43 +20,45 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
         backgroundColor: themeColor,
       ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              "We've alredy sent you an email verification. Please check your email in order to verify your account.",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white),
-            ),
-            createSpace(10),
-            const Text(
-              "Haven't recieved an email yet?",
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white),
-            ),
-            createSpace(10),
-            TextButton(
-              style: TextButton.styleFrom(
-                primary: Colors.white,
-                backgroundColor: themeColor,
-              ),
-              onPressed: () async {
-                await AuthService.firebase().sendVerification();
-              },
-              child: const Text("Resend email"),
-            ),
-            TextButton(
-              onPressed: () async {
-                Navigator.of(context)
-                    .pushNamedAndRemoveUntil(registerRoute, (route) => false);
-                await AuthService.firebase().logOut();
-              },
-              child: const Text(
-                "Restart",
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "We've alredy sent you an email verification. Please check your email in order to verify your account.",
+                textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white),
               ),
-            )
-          ],
+              createSpace(10),
+              const Text(
+                "Haven't recieved an email yet?",
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white),
+              ),
+              createSpace(10),
+              TextButton(
+                style: TextButton.styleFrom(
+                  primary: Colors.white,
+                  backgroundColor: themeColor,
+                ),
+                onPressed: () async {
+                  await AuthService.firebase().sendVerification();
+                },
+                child: const Text("Resend email"),
+              ),
+              TextButton(
+                onPressed: () async {
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil(registerRoute, (route) => false);
+                  await AuthService.firebase().logOut();
+                },
+                child: const Text(
+                  "Restart",
+                  style: TextStyle(color: Colors.white),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );
