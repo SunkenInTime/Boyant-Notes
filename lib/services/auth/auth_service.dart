@@ -25,6 +25,11 @@ class AuthService implements AuthProvider {
       provider.logIn(email: email, password: password);
 
   @override
+  Future<void> resetPassword({required String email}) {
+    return provider.resetPassword(email: email);
+  }
+
+  @override
   Future<void> logOut() {
     //does the same thingg as =>
     return provider.logOut();

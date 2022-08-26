@@ -68,49 +68,18 @@ class FirebaseCloudStorage {
 
   //Note
   Stream<Iterable<CloudNote>> allNotes({required String ownerUserId}) {
-    return notes.snapshots().map((event) => event.docs
-        .map((doc) => CloudNote.fromSnapshot(doc))
-        .where((note) => note.ownerUserId == ownerUserId));
+    return notes
+        .where(ownerUserIdFieldName, isEqualTo: ownerUserId)
+        .snapshots()
+        .map((event) => event.docs.map((doc) => CloudNote.fromSnapshot(doc)));
   }
 
   //Todolist
   Stream<Iterable<CloudTodo>> allTodo({required String ownerUserId}) {
-    return todoLists.snapshots().map((event) => event.docs
-        .map((doc) => CloudTodo.fromSnapshot(doc))
-        .where((todo) => todo.userId == ownerUserId));
-  }
-
-  //Note
-  Future<Iterable<CloudNote>> getNotes({required String ownerUserId}) async {
-    try {
-      return await notes
-          .where(
-            ownerUserId,
-            isEqualTo: ownerUserId,
-          )
-          .get()
-          .then(
-            (value) => value.docs.map((doc) => CloudNote.fromSnapshot(doc)),
-          );
-    } catch (e) {
-      throw CouldNotGetAllNoteException();
-    }
-  }
-
-  // Todolist
-  Future<Iterable<CloudTodo>> getTodos({required String ownerUserId}) async {
-    try {
-      return await todoLists
-          .where(
-            ownerUserId,
-            isEqualTo: ownerUserId,
-          )
-          .get()
-          .then(
-              (value) => value.docs.map((doc) => CloudTodo.fromSnapshot(doc)));
-    } catch (e) {
-      throw CouldNotGetAllTodoListException();
-    }
+    return todoLists
+        .where(ownerUserIdFieldName, isEqualTo: ownerUserId)
+        .snapshots()
+        .map((event) => event.docs.map((doc) => CloudTodo.fromSnapshot(doc)));
   }
 
   // Note

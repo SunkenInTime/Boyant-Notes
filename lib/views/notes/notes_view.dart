@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mynotes/services/cloud/note/cloud_note.dart';
 import 'package:mynotes/services/cloud/firebase_cloud_storage.dart';
+import 'package:mynotes/views/notes/create_update_note_view.dart';
 import '../../constants/routes.dart';
 import '../../enums/menu_action.dart';
 import '../../main.dart';
@@ -22,6 +23,7 @@ class _NotesViewState extends State<NotesView> {
   @override
   void initState() {
     _notesService = FirebaseCloudStorage();
+
     super.initState();
   }
 
@@ -88,10 +90,39 @@ class _NotesViewState extends State<NotesView> {
                             documentId: note.documentId);
                       },
                       onTap: (note) {
-                        Navigator.of(context).pushNamed(
-                          createOrUpdateNoteRoute,
-                          arguments: note,
-                        );
+                        // Navigator.of(context).pushNamed(
+                        //   createOrUpdateNoteRoute,
+                        //   arguments: note,
+                        // );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) => CreateUpdateNoteView(),
+                        //     settings: RouteSettings(arguments: note)
+                        //   ),
+                        // );
+                        // Navigator.push(
+                        //   context,
+                        //   PageRouteBuilder(
+                        //     transitionDuration: Duration(seconds: 2),
+                        //     transitionsBuilder:
+                        //         (context, animation, animationTime, child) {
+                        //       return SizeTransition(
+                        //         sizeFactor: CurvedAnimation(
+                        //           curve: Curves.linear,
+                        //           parent: controller,
+                        //         ),
+                        //         axis: Axis.vertical,
+                        //         axisAlignment: 0,
+                        //         child: child,
+                        //       );
+                        //     },
+                        //     pageBuilder: (context, animation, animationTime) {
+                        //       return CreateUpdateNoteView();
+                        //     },
+                        //     settings: RouteSettings(arguments: note),
+                        //   ),
+                        // );
                       },
                     );
                   } else {

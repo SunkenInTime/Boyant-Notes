@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:mynotes/firebase_options.dart';
 import "package:mynotes/services/auth/auth_user.dart";
 import "package:mynotes/services/auth/auth_exceptions.dart";
@@ -77,6 +78,19 @@ class FirebaseAuthProvider implements AuthProvider {
         throw ConnectionFailedAuthException();
       } else {
         throw GenericAuthException();
+      }
+    } catch (e) {
+      throw GenericAuthException();
+    }
+  }
+
+  @override
+  Future<void> resetPassword({required String email}) async {
+    try {
+      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == "auth/invalid-email" || e.code == "auth/user-not-found") {
+        throw PasswordResetAuthException();
       }
     } catch (e) {
       throw GenericAuthException();

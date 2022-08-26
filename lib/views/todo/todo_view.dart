@@ -185,34 +185,37 @@ class _TodoViewState extends State<TodoView> {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       TextButton(
-                          onPressed: () async {
-                            final title = _titleController.text;
-                            final description = _descriptionController.text;
-                            //Makes sure you can't input empty text
-                            if (title != "" && isClicked == false) {
-                              isClicked = true;
+                        onPressed: () async {
+                          final title = _titleController.text;
+                          final description = _descriptionController.text;
+                          //Makes sure you can't input empty text
+                          if (title != "" && isClicked == false) {
+                            isClicked = true;
 
-                              if (isExistingTodo != null) {
-                                final CloudTodo todo = isExistingTodo;
+                            if (isExistingTodo != null) {
+                              final CloudTodo todo = isExistingTodo;
 
-                                Navigator.pop(context);
-                                await _todoService.updateTodo(
-                                    documentId: todo.documentId,
-                                    title: title,
-                                    description: description);
-                              } else {
-                                final CloudTodo todo = await _todoService
-                                    .createNewTodo(ownerUserId: userId);
+                              Navigator.pop(context);
+                              await _todoService.updateTodo(
+                                  documentId: todo.documentId,
+                                  title: title,
+                                  description: description);
+                            } else {
+                              final CloudTodo todo = await _todoService
+                                  .createNewTodo(ownerUserId: userId);
 
-                                Navigator.pop(context);
-                                await _todoService.updateTodo(
-                                    documentId: todo.documentId,
-                                    title: title,
-                                    description: description);
-                              }
+                              Navigator.pop(context);
+                              await _todoService.updateTodo(
+                                  documentId: todo.documentId,
+                                  title: title,
+                                  description: description);
                             }
-                          },
-                          child: const Text("Save")),
+                          }
+                        },
+                        style: TextButton.styleFrom(
+                            primary: Colors.white, backgroundColor: themeColor),
+                        child: const Text("Save"),
+                      ),
                     ],
                   ),
                 )

@@ -164,16 +164,29 @@ class _LoginViewState extends State<LoginView> {
             ),
 
             TextButton(
-                style: TextButton.styleFrom(
-                  primary: Colors.white,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    registerRoute,
-                    (route) => false,
-                  );
-                },
-                child: const Text("Not signed up?"))
+              style: TextButton.styleFrom(
+                primary: defTextColor,
+              ),
+              onPressed: () {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  registerRoute,
+                  (route) => false,
+                );
+              },
+              child: const Text("Not signed up?"),
+            ),
+
+            TextButton(
+              style: TextButton.styleFrom(
+                primary: defTextColor,
+              ),
+              onPressed: () {
+                Navigator.of(context).pushNamed(
+                  forgotPasswordViewRoute,
+                );
+              },
+              child: const Text("Forgot password?"),
+            )
           ],
         ),
       ),
