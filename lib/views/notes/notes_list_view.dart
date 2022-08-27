@@ -23,53 +23,159 @@ class NotesListView extends StatelessWidget {
       itemCount: notes.length,
       itemBuilder: (context, index) {
         final note = notes.elementAt(index);
-        return Dismissible(
-          direction: DismissDirection.endToStart,
-          key: Key(note.documentId),
-          onDismissed: (direction) async {
-            onDeleteNote(note);
-          },
-          confirmDismiss: (direction) async {
-            return await showDeleteDialog(context);
-          },
-          background: Container(
-            color: Colors.red.shade700,
-            child: Align(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: const [
-                  Icon(
-                    Icons.delete_forever,
-                    color: Colors.white,
-                  ),
-                  Text(
-                    " Delete",
-                    style: TextStyle(
+
+        if (note.title.isNotEmpty && note.text.isNotEmpty) {
+          return Dismissible(
+            direction: DismissDirection.endToStart,
+            key: Key(note.documentId),
+            onDismissed: (direction) async {
+              onDeleteNote(note);
+            },
+            confirmDismiss: (direction) async {
+              return await showDeleteDialog(context);
+            },
+            background: Container(
+              color: Colors.red.shade700,
+              child: Align(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: const [
+                    Icon(
+                      Icons.delete_forever,
                       color: Colors.white,
-                      fontWeight: FontWeight.w700,
                     ),
-                    textAlign: TextAlign.right,
-                  ),
-                  SizedBox(
-                    width: 20,
-                  ),
-                ],
+                    Text(
+                      " Delete",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      textAlign: TextAlign.right,
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
-          child: ListTile(
-            onTap: () {
-              onTap(note);
-            },
-            title: Text(
-              note.text,
-              style: const TextStyle(color: defTextColor),
-              maxLines: 1,
-              softWrap: true,
-              overflow: TextOverflow.ellipsis,
+            child: ListTile(
+              onTap: () {
+                onTap(note);
+              },
+              title: Text(
+                note.title,
+                style: const TextStyle(color: defTextColor),
+                maxLines: 1,
+                softWrap: true,
+                overflow: TextOverflow.ellipsis,
+              ),
+              subtitle: Text(
+                note.text,
+                style: const TextStyle(color: Colors.white70),
+                maxLines: 1,
+                softWrap: true,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-          ),
-        );
+          );
+        } else if (note.title.isNotEmpty && note.text.isEmpty) {
+          return Dismissible(
+            direction: DismissDirection.endToStart,
+            key: Key(note.documentId),
+            onDismissed: (direction) async {
+              onDeleteNote(note);
+            },
+            confirmDismiss: (direction) async {
+              return await showDeleteDialog(context);
+            },
+            background: Container(
+              color: Colors.red.shade700,
+              child: Align(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: const [
+                    Icon(
+                      Icons.delete_forever,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      " Delete",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      textAlign: TextAlign.right,
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            child: ListTile(
+              onTap: () {
+                onTap(note);
+              },
+              title: Text(
+                note.title,
+                style: const TextStyle(color: defTextColor),
+                maxLines: 1,
+                softWrap: true,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          );
+        } else {
+          return Dismissible(
+            direction: DismissDirection.endToStart,
+            key: Key(note.documentId),
+            onDismissed: (direction) async {
+              onDeleteNote(note);
+            },
+            confirmDismiss: (direction) async {
+              return await showDeleteDialog(context);
+            },
+            background: Container(
+              color: Colors.red.shade700,
+              child: Align(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: const [
+                    Icon(
+                      Icons.delete_forever,
+                      color: Colors.white,
+                    ),
+                    Text(
+                      " Delete",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w700,
+                      ),
+                      textAlign: TextAlign.right,
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            child: ListTile(
+              onTap: () {
+                onTap(note);
+              },
+              title: Text(
+                note.text,
+                style: const TextStyle(color: defTextColor),
+                maxLines: 1,
+                softWrap: true,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          );
+        }
       },
     );
   }

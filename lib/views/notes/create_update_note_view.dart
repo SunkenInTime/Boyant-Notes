@@ -18,12 +18,14 @@ class CreateUpdateNoteView extends StatefulWidget {
 class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
   CloudNote? _note;
   late final FirebaseCloudStorage _notesService;
-  late final TextEditingController _textController;
+  late final TextEditingController _noteTextController;
+  late final TextEditingController _titleTextController;
 
   @override
   void initState() {
     _notesService = FirebaseCloudStorage();
-    _textController = TextEditingController();
+    _noteTextController = TextEditingController();
+    _titleTextController = TextEditingController();
     super.initState();
   }
 
@@ -32,14 +34,20 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
     if (note == null) {
       return;
     }
-    final text = _textController.text;
-
-    await _notesService.updateNote(documentId: note.documentId, text: text);
+    final text = _noteTextController.text;
+    final title = _titleTextController.text;
+    await _notesService.updateNote(
+      documentId: note.documentId,
+      text: text,
+      title: title,
+    );
   }
 
   void _setupTextControllerListener() {
-    _textController.removeListener(_textControllerListener);
-    _textController.addListener(_textControllerListener);
+    _noteTextController.removeListener(_textControllerListener);
+    _noteTextController.addListener(_textControllerListener);
+    _titleTextController.removeListener(_textControllerListener);
+    _titleTextController.addListener(_textControllerListener);
   }
 
   Future<CloudNote> createOrGetExistingNote(BuildContext context) async {
@@ -47,7 +55,8 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
 
     if (widgetNote != null) {
       _note = widgetNote;
-      _textController.text = widgetNote.text;
+      _noteTextController.text = widgetNote.text;
+      _titleTextController.text = widgetNote.title;
       return widgetNote;
     }
 
@@ -64,18 +73,22 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
 
   void _deleteNoteIfTextIsEmpty() {
     final note = _note;
-    if (_textController.text.isEmpty && note != null) {
+    if (_noteTextController.text.isEmpty &&
+        note != null &&
+        _titleTextController.text.isEmpty) {
       _notesService.deleteNote(documentId: note.documentId);
     }
   }
 
   void _saveNoteIfTextNotEmpty() async {
     final note = _note;
-    final text = _textController.text;
-    if (note != null && text.isNotEmpty) {
+    final text = _noteTextController.text;
+    final title = _titleTextController.text;
+    if (note != null && text.isNotEmpty || note != null && title.isNotEmpty) {
       await _notesService.updateNote(
         documentId: note.documentId,
         text: text,
+        title: title,
       );
     }
   }
@@ -84,7 +97,8 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
   void dispose() {
     _deleteNoteIfTextIsEmpty();
     _saveNoteIfTextNotEmpty();
-    _textController.dispose();
+    _noteTextController.dispose();
+    _titleTextController.dispose();
     super.dispose();
   }
 
@@ -93,15 +107,23 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
-        title: const Text(
-          "New Note",
-          style: TextStyle(color: defTextColor),
+        title: TextField(
+          controller: _titleTextController,
+          style: const TextStyle(
+            color: defTextColor,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+          decoration: const InputDecoration(
+              border: InputBorder.none,
+              hintText: "Title",
+              hintStyle: TextStyle(color: Colors.white70)),
         ),
         backgroundColor: themeColor,
         actions: [
           IconButton(
             onPressed: () async {
-              final text = _textController.text;
+              final text = _noteTextController.text;
               if (_note == null || text.isEmpty) {
                 await showCannotShareEmptyNoteDialog(context);
               } else {
@@ -121,7 +143,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
               return SizedBox(
                 height: double.infinity,
                 child: TextField(
-                  controller: _textController,
+                  controller: _noteTextController,
                   style: const TextStyle(color: defTextColor),
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
