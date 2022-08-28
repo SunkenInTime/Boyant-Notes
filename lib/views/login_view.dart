@@ -40,10 +40,8 @@ class _LoginViewState extends State<LoginView> {
 
     //intialize();
     return Scaffold(
-      backgroundColor: bgColor,
       appBar: AppBar(
         title: const Text("Login"),
-        backgroundColor: themeColor,
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -59,11 +57,9 @@ class _LoginViewState extends State<LoginView> {
                   enableSuggestions: true,
                   autocorrect: false,
                   keyboardType: TextInputType.emailAddress,
-                  style: const TextStyle(color: Colors.white),
                   textAlign: TextAlign.center,
                   decoration: const InputDecoration(
                     hintText: "Email",
-                    hintStyle: TextStyle(color: Colors.white),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.blue, width: 2),
                     ),
@@ -89,10 +85,8 @@ class _LoginViewState extends State<LoginView> {
                   enableSuggestions: false,
                   autocorrect: false,
                   controller: _password,
-                  style: const TextStyle(color: Colors.white),
                   textAlign: TextAlign.center,
                   decoration: const InputDecoration(
-                    fillColor: Colors.white,
                     border: OutlineInputBorder(),
                     hintText: "Password",
                     focusedBorder: OutlineInputBorder(
@@ -102,7 +96,6 @@ class _LoginViewState extends State<LoginView> {
                       borderSide: BorderSide(
                           color: Color.fromARGB(255, 167, 167, 167), width: 2),
                     ),
-                    hintStyle: TextStyle(color: Colors.white),
                   ),
                 ),
               ),
@@ -115,7 +108,9 @@ class _LoginViewState extends State<LoginView> {
                 height: sizedBoxHeight,
                 child: TextButton(
                   style: TextButton.styleFrom(
-                      primary: Colors.white, backgroundColor: themeColor),
+                    primary: Colors.white,
+                    backgroundColor: Theme.of(context).primaryColor,
+                  ),
                   onPressed: () async {
                     final email = _email.text;
                     final password = _password.text;

@@ -55,20 +55,33 @@ class _TodoViewState extends State<TodoView> {
 
                   if (shouldLogout) {
                     await AuthService.firebase().logOut();
-                    if (!man) {} //used this to escape an error i have no idea how to fix :skull:
+                    if (!mounted) return;
                     Navigator.of(context).pushNamedAndRemoveUntil(
                       loginRoute,
                       (_) => false,
                     );
                   }
                   break;
+                case MenuAction.settings:
+                  Navigator.of(context).pushNamed(settingsRoute);
+                  break;
               }
             },
             itemBuilder: (context) {
-              return const [
-                PopupMenuItem<MenuAction>(
+              return [
+                const PopupMenuItem<MenuAction>(
+                  value: MenuAction.settings,
+                  child: Text(
+                    "Settings",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+                const PopupMenuItem<MenuAction>(
                   value: MenuAction.logout,
-                  child: Text("Log out"),
+                  child: Text(
+                    "Log out",
+                    style: TextStyle(color: Colors.black),
+                  ),
                 )
               ];
             },
@@ -125,7 +138,7 @@ class _TodoViewState extends State<TodoView> {
         onPressed: (() {
           showTextAreaSheet(context, null);
         }),
-        backgroundColor: themeColor,
+        // backgroundColor: themeColor,
         child: const Icon(Icons.add),
       ),
       //floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -167,12 +180,13 @@ class _TodoViewState extends State<TodoView> {
                     border: InputBorder.none,
                     hintText: "Title",
                   ),
+                  style: const TextStyle(color: Colors.black),
                 ),
                 TextField(
                   controller: _descriptionController,
                   maxLines: null,
                   minLines: 1,
-                  style: const TextStyle(height: 1),
+                  style: const TextStyle(height: 1, color: Colors.black),
                   decoration: const InputDecoration(
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.only(left: 20),

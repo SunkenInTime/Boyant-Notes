@@ -3,11 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
 import 'package:mynotes/services/auth/auth_service.dart';
+import 'package:mynotes/themes/themes.dart';
 import 'package:mynotes/views/forgot_password_view.dart';
 import 'package:mynotes/views/login_view.dart';
 import 'package:mynotes/views/notes/create_update_note_view.dart';
 import 'package:mynotes/views/main_ui.dart';
 import 'package:mynotes/views/register_view.dart';
+import 'package:mynotes/views/settings_view.dart';
 import 'package:mynotes/views/verify_email_view.dart';
 import "dart:developer" as devtools show log;
 
@@ -36,28 +38,34 @@ SizedBox createSpaceWidth(double height, double width) {
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(MaterialApp(
-    title: 'Flutter Demo',
-    theme: ThemeData(
-        primaryColor: bgColor,
-        secondaryHeaderColor: themeColor,
-        unselectedWidgetColor: const Color.fromARGB(255, 102, 102, 102),
-        iconTheme: const IconThemeData(color: Colors.grey)),
-    debugShowCheckedModeBanner: false,
-    home: const HomePage(),
-    routes: {
-      loginRoute: (context) => const LoginView(),
-      registerRoute: (context) => const RegisterView(),
-      notesRoute: (context) => const MainUIView(),
-      verifyRoute: (context) => const VerifyEmailView(),
-      createOrUpdateNoteRoute: (context) => const CreateUpdateNoteView(),
-      forgotPasswordViewRoute: (context) => const ForgotPasswordView(),
-    },
-  ));
+  runApp(const HomePage());
 }
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Flutter Demo',
+      theme: MyThemes.purpleTheme,
+      debugShowCheckedModeBanner: false,
+      home: const Setup(),
+      routes: {
+        loginRoute: (context) => const LoginView(),
+        registerRoute: (context) => const RegisterView(),
+        notesRoute: (context) => const MainUIView(),
+        verifyRoute: (context) => const VerifyEmailView(),
+        createOrUpdateNoteRoute: (context) => const CreateUpdateNoteView(),
+        forgotPasswordViewRoute: (context) => const ForgotPasswordView(),
+        settingsRoute: (context) => const SettingsView(),
+      },
+    );
+  }
+}
+
+class Setup extends StatelessWidget {
+  const Setup({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +95,6 @@ class HomePage extends StatelessWidget {
               shareIcon = const Icon(Icons.share);
             }
             return Scaffold(
-              backgroundColor: const Color.fromARGB(255, 180, 180, 180),
               body: Center(
                 child: SizedBox(
                   width: sizedBoxWidth,

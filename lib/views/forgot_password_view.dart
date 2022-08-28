@@ -33,10 +33,8 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
     const resetSnackBar =
         SnackBar(content: Text("Password reset email has been sent!"));
     return Scaffold(
-      backgroundColor: bgColor,
       appBar: AppBar(
         title: const Text("Forgot Password"),
-        backgroundColor: themeColor,
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -51,7 +49,6 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                   enableSuggestions: true,
                   autocorrect: false,
                   keyboardType: TextInputType.emailAddress,
-                  style: const TextStyle(color: Colors.white),
                   textAlign: TextAlign.center,
                   decoration: const InputDecoration(
                     hintText: "Email",
@@ -74,7 +71,8 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                 height: 55,
                 child: TextButton(
                   style: TextButton.styleFrom(
-                      primary: Colors.white, backgroundColor: themeColor),
+                      primary: Colors.white,
+                      backgroundColor: Theme.of(context).primaryColor),
                   onPressed: () async {
                     try {
                       await AuthService.firebase()
