@@ -18,6 +18,8 @@ class MyThemes {
     inputDecorationTheme: const InputDecorationTheme(
       hintStyle: TextStyle(color: Colors.white70),
     ),
+
+    //Change
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       unselectedItemColor: Colors.white54,
       showUnselectedLabels: false,
