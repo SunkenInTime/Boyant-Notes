@@ -37,10 +37,8 @@ class _RegisterViewState extends State<RegisterView> {
     const double sizedBoxWidth = 300;
     const double sizedBoxHeight = 50;
     return Scaffold(
-      backgroundColor: bgColor,
       appBar: AppBar(
         title: const Text("Register"),
-        backgroundColor: themeColor,
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -56,11 +54,9 @@ class _RegisterViewState extends State<RegisterView> {
                   enableSuggestions: true,
                   autocorrect: false,
                   keyboardType: TextInputType.emailAddress,
-                  style: const TextStyle(color: Colors.white),
                   textAlign: TextAlign.center,
                   decoration: const InputDecoration(
                     hintText: "Email",
-                    hintStyle: TextStyle(color: Colors.white),
                     focusedBorder: OutlineInputBorder(
                       borderSide: BorderSide(color: Colors.blue, width: 2),
                     ),
@@ -86,10 +82,8 @@ class _RegisterViewState extends State<RegisterView> {
                   enableSuggestions: false,
                   autocorrect: false,
                   controller: _password,
-                  style: const TextStyle(color: Colors.white),
                   textAlign: TextAlign.center,
                   decoration: const InputDecoration(
-                    fillColor: Colors.white,
                     border: OutlineInputBorder(),
                     hintText: "Password",
                     focusedBorder: OutlineInputBorder(
@@ -99,7 +93,6 @@ class _RegisterViewState extends State<RegisterView> {
                       borderSide: BorderSide(
                           color: Color.fromARGB(255, 167, 167, 167), width: 2),
                     ),
-                    hintStyle: TextStyle(color: Colors.white),
                   ),
                 ),
               ),
@@ -113,7 +106,9 @@ class _RegisterViewState extends State<RegisterView> {
                 height: sizedBoxHeight,
                 child: TextButton(
                     style: TextButton.styleFrom(
-                        primary: Colors.white, backgroundColor: themeColor),
+                      primary: Colors.white,
+                      backgroundColor: Theme.of(context).primaryColor,
+                    ),
                     onPressed: () async {
                       final email = _email.text;
                       final password = _password.text;

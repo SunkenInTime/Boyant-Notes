@@ -31,11 +31,9 @@ class _NotesViewState extends State<NotesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: bgColor,
         appBar: AppBar(
           title: const Text(
             "Your Notes",
-            style: TextStyle(color: defTextColor),
           ),
           // backgroundColor: themeColor,
           actions: [

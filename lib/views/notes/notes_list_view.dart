@@ -167,7 +167,6 @@ class NotesListView extends StatelessWidget {
               },
               title: Text(
                 note.text,
-                style: const TextStyle(color: defTextColor),
                 maxLines: 1,
                 softWrap: true,
                 overflow: TextOverflow.ellipsis,

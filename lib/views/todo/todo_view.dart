@@ -42,10 +42,8 @@ class _TodoViewState extends State<TodoView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bgColor,
       appBar: AppBar(
         title: const Text("Todo"),
-        backgroundColor: themeColor,
         actions: [
           PopupMenuButton<MenuAction>(
             onSelected: (value) async {

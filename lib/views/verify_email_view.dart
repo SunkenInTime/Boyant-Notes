@@ -14,10 +14,8 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bgColor,
       appBar: AppBar(
         title: const Text("Home"),
-        backgroundColor: themeColor,
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -27,19 +25,17 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
               const Text(
                 "We've alredy sent you an email verification. Please check your email in order to verify your account.",
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white),
               ),
               createSpace(10),
               const Text(
                 "Haven't recieved an email yet?",
                 textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.white),
               ),
               createSpace(10),
               TextButton(
                 style: TextButton.styleFrom(
                   primary: Colors.white,
-                  backgroundColor: themeColor,
+                  backgroundColor: Theme.of(context).primaryColor,
                 ),
                 onPressed: () async {
                   await AuthService.firebase().sendVerification();
@@ -54,7 +50,6 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                 },
                 child: const Text(
                   "Restart",
-                  style: TextStyle(color: Colors.white),
                 ),
               )
             ],

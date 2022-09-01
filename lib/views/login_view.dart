@@ -108,7 +108,7 @@ class _LoginViewState extends State<LoginView> {
                 height: sizedBoxHeight,
                 child: TextButton(
                   style: TextButton.styleFrom(
-                    primary: Colors.white,
+                    primary: defTextColor,
                     backgroundColor: Theme.of(context).primaryColor,
                   ),
                   onPressed: () async {

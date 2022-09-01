@@ -10,7 +10,9 @@ class SettingsView extends StatefulWidget {
 }
 
 class _SettingsViewState extends State<SettingsView> {
-  final themes = ["Purple", "Green"];
+  final List<String> themes = ["Purple", "Green"];
+  final currentTheme = "Purple";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,9 +28,17 @@ class _SettingsViewState extends State<SettingsView> {
             children: [
               const Text(
                 "Themes",
-                style: TextStyle(color: defTextColor, fontSize: 17),
+                style: TextStyle(fontSize: 17),
               ),
-              // DropdownButton<String>(items: themes.map(buildMenuItem).toList(), onChanged: () {})
+              //          DropdownButton<String>(value: currentTheme,items: <String>['One', 'Two', 'Free', 'Four']
+              //     .map<DropdownMenuItem<String>>((String value) {
+              //   return DropdownMenuItem<String>(
+              //     value: value,
+              //     child: Text(value),
+              //   );
+              // }).toList(), onChanged: () {
+
+              // })
             ],
           )
         ]),

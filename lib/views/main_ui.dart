@@ -22,29 +22,22 @@ class _MainUIViewState extends State<MainUIView> {
       body: screens[currentIndex],
       // Bottom bar
       bottomNavigationBar: BottomNavigationBar(
-        unselectedItemColor: Colors.white54,
         currentIndex: currentIndex,
         onTap: (index) => setState(() => currentIndex = index),
-        fixedColor: Colors.white,
-        showUnselectedLabels: false,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(
               Icons.notes_rounded,
-              //color: Colors.white,
             ),
             label: "Notes",
-            backgroundColor: Colors.white,
           ),
           BottomNavigationBarItem(
-              icon: Icon(
-                Icons.checklist,
-                //color: Colors.white,
-              ),
-              label: "Todo List",
-              backgroundColor: themeColor),
+            icon: Icon(
+              Icons.checklist,
+            ),
+            label: "Todo List",
+          ),
         ],
-        backgroundColor: themeColor,
       ),
     );
   }
@@ -55,8 +48,14 @@ Future<bool> showLogOutDialog(BuildContext context) {
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: const Text("Sign out"),
-        content: const Text("Are you sure you want to sign out"),
+        title: const Text(
+          "Sign out",
+          style: TextStyle(color: Colors.black),
+        ),
+        content: const Text(
+          "Are you sure you want to sign out",
+          style: TextStyle(color: Colors.black),
+        ),
         actions: [
           TextButton(
             onPressed: () {

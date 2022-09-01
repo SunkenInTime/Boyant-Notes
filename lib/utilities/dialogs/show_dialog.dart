@@ -9,8 +9,14 @@ Future<void> showInfoDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text(title),
-        content: Text(text),
+        title: Text(
+          title,
+          style: const TextStyle(color: Colors.black),
+        ),
+        content: Text(
+          text,
+          style: const TextStyle(color: Colors.black),
+        ),
         actions: [
           TextButton(
               onPressed: () {
@@ -36,8 +42,14 @@ Future<T?> showGenericDialog<T>({
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: Text(title),
-        content: Text(content),
+        title: Text(
+          title,
+          style: const TextStyle(color: Colors.black),
+        ),
+        content: Text(
+          content,
+          style: const TextStyle(color: Colors.black),
+        ),
         actions: options.keys.map((optionTitle) {
           final T value = options[optionTitle];
           return TextButton(
@@ -48,7 +60,10 @@ Future<T?> showGenericDialog<T>({
                 Navigator.of(context).pop();
               }
             },
-            child: Text(optionTitle),
+            child: Text(
+              optionTitle,
+              style: const TextStyle(color: Colors.black),
+            ),
           );
         }).toList(),
       );

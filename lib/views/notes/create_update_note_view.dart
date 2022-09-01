@@ -105,21 +105,18 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: bgColor,
       appBar: AppBar(
         title: TextField(
           controller: _titleTextController,
           style: const TextStyle(
-            color: defTextColor,
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
           decoration: const InputDecoration(
-              border: InputBorder.none,
-              hintText: "Title",
-              hintStyle: TextStyle(color: Colors.white70)),
+            border: InputBorder.none,
+            hintText: "Title",
+          ),
         ),
-        backgroundColor: themeColor,
         actions: [
           IconButton(
             onPressed: () async {
@@ -144,7 +141,6 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                 height: double.infinity,
                 child: TextField(
                   controller: _noteTextController,
-                  style: const TextStyle(color: defTextColor),
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
                   decoration: const InputDecoration(
@@ -152,7 +148,6 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
                         EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                     border: InputBorder.none,
                     hintText: "Start typing your note...",
-                    hintStyle: TextStyle(color: defTextColor),
                   ),
                 ),
               );

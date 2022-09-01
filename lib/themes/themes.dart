@@ -18,5 +18,15 @@ class MyThemes {
     inputDecorationTheme: const InputDecorationTheme(
       hintStyle: TextStyle(color: Colors.white70),
     ),
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      unselectedItemColor: Colors.white54,
+      showUnselectedLabels: false,
+      backgroundColor: purplePrimary,
+      selectedIconTheme: IconThemeData(color: Colors.white),
+      unselectedIconTheme: IconThemeData(color: Colors.white54),
+      showSelectedLabels: true,
+      selectedItemColor: Colors.white,
+    ),
+    // buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.)
   );
 }

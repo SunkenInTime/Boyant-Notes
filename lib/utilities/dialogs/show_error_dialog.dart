@@ -8,14 +8,23 @@ Future<void> showErrorDialog(
     context: context,
     builder: (context) {
       return AlertDialog(
-        title: const Text("An error occurred"),
-        content: Text(text),
+        title: const Text(
+          "An error occurred",
+          style: TextStyle(color: Colors.black),
+        ),
+        content: Text(
+          text,
+          style: const TextStyle(color: Colors.black),
+        ),
         actions: [
           TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text("Okay"))
+              child: const Text(
+                "Okay",
+                style: TextStyle(color: Colors.black),
+              ))
         ],
       );
     },
