@@ -32,3 +32,11 @@ class MyThemes {
     // buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.)
   );
 }
+
+class ThemeProvider extends ChangeNotifier {
+  final themeChange;
+
+  ThemeProvider({required this.themeChange});
+
+  void changeTheme(themeChange) {}
+}

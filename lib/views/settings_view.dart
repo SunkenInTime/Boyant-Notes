@@ -30,15 +30,16 @@ class _SettingsViewState extends State<SettingsView> {
                 "Themes",
                 style: TextStyle(fontSize: 17),
               ),
-              //          DropdownButton<String>(value: currentTheme,items: <String>['One', 'Two', 'Free', 'Four']
-              //     .map<DropdownMenuItem<String>>((String value) {
-              //   return DropdownMenuItem<String>(
-              //     value: value,
-              //     child: Text(value),
-              //   );
-              // }).toList(), onChanged: () {
-
-              // })
+              DropdownButton<String>(
+                value: currentTheme,
+                items: themes.map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (newValue) {},
+              )
             ],
           )
         ]),
