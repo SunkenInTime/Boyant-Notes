@@ -140,6 +140,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
               return SizedBox(
                 height: double.infinity,
                 child: TextField(
+                  scribbleEnabled: true,
                   controller: _noteTextController,
                   keyboardType: TextInputType.multiline,
                   maxLines: null,
