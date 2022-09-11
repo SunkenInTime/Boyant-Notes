@@ -7,6 +7,7 @@ import 'package:mynotes/services/cloud/todo/cloud_todo.dart';
 class FirebaseCloudStorage {
   final notes = FirebaseFirestore.instance.collection("notes");
   final todoLists = FirebaseFirestore.instance.collection("todo");
+  final userSettings = FirebaseFirestore.instance.collection("userSettings");
 
   //Notes
   Future<void> deleteNote({required String documentId}) async {
@@ -39,6 +40,17 @@ class FirebaseCloudStorage {
       });
     } catch (e) {
       throw CouldNotUpdateNoteException();
+    }
+  }
+
+  Future<void> updateTheme({
+    required String documentId,
+    required String theme,
+  }) async {
+    try {
+      await userSettings.doc(documentId).update({themeFieldName: theme});
+    } catch (e) {
+      throw CouldNotUpdateSettingException();
     }
   }
 
@@ -100,6 +112,13 @@ class FirebaseCloudStorage {
       text: "",
       title: "",
     );
+  }
+
+  Future<void> createUserSetting({required String ownerUserId}) async {
+    await userSettings.add({
+      ownerUserIdFieldName: ownerUserId,
+      themeFieldName: "Purple",
+    });
   }
 
   // Todolist

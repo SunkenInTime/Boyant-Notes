@@ -94,7 +94,9 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderSide: BorderSide(
-                          color: Color.fromARGB(255, 167, 167, 167), width: 2),
+                        color: Color.fromARGB(255, 167, 167, 167),
+                        width: 2,
+                      ),
                     ),
                   ),
                 ),
