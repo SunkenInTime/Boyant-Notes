@@ -177,6 +177,7 @@ class _TodoViewState extends State<TodoView> {
                     contentPadding: EdgeInsets.only(left: 10),
                     border: InputBorder.none,
                     hintText: "Title",
+                    hintStyle: TextStyle(color: Colors.black54),
                   ),
                   style: const TextStyle(color: Colors.black),
                 ),
@@ -189,6 +190,7 @@ class _TodoViewState extends State<TodoView> {
                     border: InputBorder.none,
                     contentPadding: EdgeInsets.only(left: 20),
                     hintText: "Description",
+                    hintStyle: TextStyle(color: Colors.black54),
                   ),
                 ),
                 Container(
@@ -230,7 +232,8 @@ class _TodoViewState extends State<TodoView> {
                       ),
                     ],
                   ),
-                )
+                ),
+                createSpace(20),
               ],
             ),
           );
