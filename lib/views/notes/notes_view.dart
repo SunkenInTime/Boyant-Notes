@@ -31,136 +31,145 @@ class _NotesViewState extends State<NotesView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text(
-            "Your Notes",
-          ),
-          // backgroundColor: themeColor,
-          actions: [
-            IconButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed(
-                  createOrUpdateNoteRoute,
-                );
-              },
-              icon: const Icon(Icons.add),
-            ),
-            PopupMenuButton<MenuAction>(
-              onSelected: (value) async {
-                switch (value) {
-                  case MenuAction.logout:
-                    final shouldLogout = await showLogOutDialog(context);
-
-                    if (shouldLogout) {
-                      await AuthService.firebase().logOut();
-                      if (!mounted) return;
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                        loginRoute,
-                        (_) => false,
-                      );
-                    }
-                    break;
-                  case MenuAction.settings:
-                    Navigator.of(context).pushNamed(settingsRoute);
-                    break;
-                }
-              },
-              itemBuilder: (context) {
-                return [
-                  // const PopupMenuItem<MenuAction>(
-                  //   value: MenuAction.settings,
-                  //   child: Text(
-                  //     "Settings",
-                  //     style: TextStyle(color: Colors.black),
-                  //   ),
-                  // ),
-                  const PopupMenuItem<MenuAction>(
-                    value: MenuAction.logout,
-                    child: Text(
-                      "Log out",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  )
-                ];
-              },
-            )
-          ],
+      appBar: AppBar(
+        title: const Text(
+          "Your Notes",
         ),
-        body: StreamBuilder(
-            stream: _notesService.allNotes(ownerUserId: userId),
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.waiting:
+        // backgroundColor: themeColor,
+        actions: [
+          // IconButton(
+          //   onPressed: () {
+          //     Navigator.of(context).pushNamed(
+          //       createOrUpdateNoteRoute,
+          //     );
+          //   },
+          //   icon: const Icon(Icons.add),
+          // ),
+          PopupMenuButton<MenuAction>(
+            onSelected: (value) async {
+              switch (value) {
+                case MenuAction.logout:
+                  final shouldLogout = await showLogOutDialog(context);
 
-                case ConnectionState.active:
-                  if (snapshot.hasData) {
-                    final allNotes = snapshot.data as Iterable<CloudNote>;
-                    return NotesListView(
-                      notes: allNotes,
-                      onDeleteNote: (note) async {
-                        await _notesService.deleteNote(
-                            documentId: note.documentId);
-                      },
-                      onTap: (note) {
-                        Navigator.of(context).pushNamed(
-                          createOrUpdateNoteRoute,
-                          arguments: note,
-                        );
-
-                        // Navigator.of(context).pushNamed(
-                        //   createOrUpdateNoteRoute,
-                        //   arguments: note,
-                        // );
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => CreateUpdateNoteView(),
-                        //     settings: RouteSettings(arguments: note)
-                        //   ),
-                        // );
-                        // Navigator.push(
-                        //   context,
-                        //   PageRouteBuilder(
-                        //     transitionDuration: Duration(seconds: 2),
-                        //     transitionsBuilder:
-                        //         (context, animation, animationTime, child) {
-                        //       return SizeTransition(
-                        //         sizeFactor: CurvedAnimation(
-                        //           curve: Curves.linear,
-                        //           parent: controller,
-                        //         ),
-                        //         axis: Axis.vertical,
-                        //         axisAlignment: 0,
-                        //         child: child,
-                        //       );
-                        //     },
-                        //     pageBuilder: (context, animation, animationTime) {
-                        //       return CreateUpdateNoteView();
-                        //     },
-                        //     settings: RouteSettings(arguments: note),
-                        //   ),
-                        // );
-                      },
-                    );
-                  } else {
-                    return Center(
-                      child: SizedBox(
-                        width: sizedBoxWidth,
-                        height: sizedBoxHeight,
-                        child: Center(child: loadingCircle),
-                      ),
+                  if (shouldLogout) {
+                    await AuthService.firebase().logOut();
+                    if (!mounted) return;
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      loginRoute,
+                      (_) => false,
                     );
                   }
-
-                default:
-                  return Center(
-                    child: SizedBox(
-                      width: sizedBoxWidth,
-                      height: sizedBoxHeight,
-                      child: Center(child: loadingCircle),
-                    ),
-                  );
+                  break;
+                case MenuAction.settings:
+                  Navigator.of(context).pushNamed(settingsRoute);
+                  break;
               }
-            }));
+            },
+            itemBuilder: (context) {
+              return [
+                // const PopupMenuItem<MenuAction>(
+                //   value: MenuAction.settings,
+                //   child: Text(
+                //     "Settings",
+                //     style: TextStyle(color: Colors.black),
+                //   ),
+                // ),
+                const PopupMenuItem<MenuAction>(
+                  value: MenuAction.logout,
+                  child: Text(
+                    "Log out",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                )
+              ];
+            },
+          )
+        ],
+      ),
+      body: StreamBuilder(
+        stream: _notesService.allNotes(ownerUserId: userId),
+        builder: (context, snapshot) {
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+
+            case ConnectionState.active:
+              if (snapshot.hasData) {
+                final allNotes = snapshot.data as Iterable<CloudNote>;
+                return NotesListView(
+                  notes: allNotes,
+                  onDeleteNote: (note) async {
+                    await _notesService.deleteNote(documentId: note.documentId);
+                  },
+                  onTap: (note) {
+                    Navigator.of(context).pushNamed(
+                      createOrUpdateNoteRoute,
+                      arguments: note,
+                    );
+
+                    // Navigator.of(context).pushNamed(
+                    //   createOrUpdateNoteRoute,
+                    //   arguments: note,
+                    // );
+                    // Navigator.push(
+                    //   context,
+                    //   MaterialPageRoute(
+                    //     builder: (context) => CreateUpdateNoteView(),
+                    //     settings: RouteSettings(arguments: note)
+                    //   ),
+                    // );
+                    // Navigator.push(
+                    //   context,
+                    //   PageRouteBuilder(
+                    //     transitionDuration: Duration(seconds: 2),
+                    //     transitionsBuilder:
+                    //         (context, animation, animationTime, child) {
+                    //       return SizeTransition(
+                    //         sizeFactor: CurvedAnimation(
+                    //           curve: Curves.linear,
+                    //           parent: controller,
+                    //         ),
+                    //         axis: Axis.vertical,
+                    //         axisAlignment: 0,
+                    //         child: child,
+                    //       );
+                    //     },
+                    //     pageBuilder: (context, animation, animationTime) {
+                    //       return CreateUpdateNoteView();
+                    //     },
+                    //     settings: RouteSettings(arguments: note),
+                    //   ),
+                    // );
+                  },
+                );
+              } else {
+                return Center(
+                  child: SizedBox(
+                    width: sizedBoxWidth,
+                    height: sizedBoxHeight,
+                    child: Center(child: loadingCircle),
+                  ),
+                );
+              }
+
+            default:
+              return Center(
+                child: SizedBox(
+                  width: sizedBoxWidth,
+                  height: sizedBoxHeight,
+                  child: Center(child: loadingCircle),
+                ),
+              );
+          }
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (() {
+          Navigator.of(context).pushNamed(
+            createOrUpdateNoteRoute,
+          );
+        }),
+        child: const Icon(Icons.add),
+      ),
+    );
   }
 }
