@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:mynotes/main.dart';
+import 'package:mynotes/services/hive/settings_service.dart';
+
+import '../services/hive/boxes.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({Key? key}) : super(key: key);
@@ -10,9 +13,9 @@ class SettingsView extends StatefulWidget {
 }
 
 class _SettingsViewState extends State<SettingsView> {
-  final List<String> themes = ["Purple", "Green"];
+  final themes = ["Purple", "Green"];
   final currentTheme = "Purple";
-
+  String? value;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,20 +33,50 @@ class _SettingsViewState extends State<SettingsView> {
                 "Themes",
                 style: TextStyle(fontSize: 17),
               ),
+              const Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
               DropdownButton<String>(
-                value: currentTheme,
-                items: themes.map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
+                dropdownColor: Colors.black54,
+                items: themes.map(buildMenuItem).toList(),
+                value: value,
+                onChanged: (value) {
+                  setState(
+                    () => this.value = value,
                   );
-                }).toList(),
-                onChanged: (newValue) {},
-              )
+                  final box = Boxes.getUserSettings();
+                  final userSetting = UserSettings(value ?? "Purple");
+
+                  box.put("defaultKey", userSetting);
+                  String text = box.get("defaultKey")!.theme;
+                  print(text);
+                },
+              ),
+              // DropdownButton<String>(
+              //   value: currentTheme,
+              //   items: themes.map<DropdownMenuItem<String>>((String value) {
+              //     return DropdownMenuItem<String>(
+              //       value: value,
+              //       child: Text(
+              //         value,
+              //         style: TextStyle(color: Colors.black),
+              //       ),
+              //     );
+              //   }).toList(),
+              //   onChanged: (newValue) {
+
+              //   },
+              // )
             ],
           )
         ]),
       ),
     );
   }
+
+  DropdownMenuItem<String> buildMenuItem(String theme) => DropdownMenuItem(
+        value: theme,
+        child: Text(
+          theme,
+          style: const TextStyle(color: Colors.white),
+        ),
+      );
 }

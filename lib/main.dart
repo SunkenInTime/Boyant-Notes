@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:mynotes/constants/routes.dart';
 import 'package:mynotes/services/auth/auth_service.dart';
+import 'package:mynotes/services/hive/settings_service.dart';
 import 'package:mynotes/themes/themes.dart';
 import 'package:mynotes/views/forgot_password_view.dart';
 import 'package:mynotes/views/login_view.dart';
@@ -36,8 +38,11 @@ SizedBox createSpaceWidth(double height, double width) {
   );
 }
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(UserSettingsAdapter());
+  await Hive.openBox<UserSettings>("user_settings");
   runApp(const HomePage());
 }
 

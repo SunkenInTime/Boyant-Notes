@@ -24,7 +24,6 @@ class _NotesViewState extends State<NotesView> {
   @override
   void initState() {
     _notesService = FirebaseCloudStorage();
-
     super.initState();
   }
 
@@ -67,13 +66,13 @@ class _NotesViewState extends State<NotesView> {
             },
             itemBuilder: (context) {
               return [
-                // const PopupMenuItem<MenuAction>(
-                //   value: MenuAction.settings,
-                //   child: Text(
-                //     "Settings",
-                //     style: TextStyle(color: Colors.black),
-                //   ),
-                // ),
+                const PopupMenuItem<MenuAction>(
+                  value: MenuAction.settings,
+                  child: Text(
+                    "Settings",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
                 const PopupMenuItem<MenuAction>(
                   value: MenuAction.logout,
                   child: Text(
