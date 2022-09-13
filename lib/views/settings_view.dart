@@ -13,7 +13,7 @@ class SettingsView extends StatefulWidget {
 }
 
 class _SettingsViewState extends State<SettingsView> {
-  final themes = ["Purple", "Green"];
+  final themes = ["Purple", "Green", "White"];
   final currentTheme = "Purple";
 
   String? value = Boxes.getUserSettings().get("defaultKey")!.theme;

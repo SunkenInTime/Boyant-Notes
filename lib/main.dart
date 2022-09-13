@@ -59,11 +59,14 @@ class HomePage extends StatelessWidget {
       if (box.get("defaultKey", defaultValue: UserSettings("Purple"))!.theme ==
           "Green") {
         currentTheme = MyThemes.greenTheme;
+      } else if (box.get("defaultKey")!.theme == "White") {
+        currentTheme = MyThemes.lightTheme;
       } else {
         currentTheme = MyThemes.purpleTheme;
       }
     } else {
       box.put("defaultKey", UserSettings("Purple"));
+      currentTheme = MyThemes.purpleTheme;
     }
 
     return MaterialApp(
