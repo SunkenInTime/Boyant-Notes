@@ -64,6 +64,7 @@ class _NotesViewState extends State<NotesView> {
                   Navigator.of(context).pushNamed(settingsRoute).then(
                     (_) {
                       Phoenix.rebirth(context);
+                      log("Changed");
                     },
                   );
                   break;

@@ -54,11 +54,18 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final box = Boxes.getUserSettings();
-    if (box.get("defaultKey")!.theme == "Green") {
-      currentTheme = MyThemes.greenTheme;
+
+    if (box.containsKey("defaultKey")) {
+      if (box.get("defaultKey", defaultValue: UserSettings("Purple"))!.theme ==
+          "Green") {
+        currentTheme = MyThemes.greenTheme;
+      } else {
+        currentTheme = MyThemes.purpleTheme;
+      }
     } else {
-      currentTheme = MyThemes.purpleTheme;
+      box.put("defaultKey", UserSettings("Purple"));
     }
+
     return MaterialApp(
       title: 'Flutter Demo',
       theme: currentTheme,
