@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:mynotes/services/cloud/note/cloud_note.dart';
 import 'package:mynotes/services/cloud/firebase_cloud_storage.dart';
 
@@ -60,7 +61,11 @@ class _NotesViewState extends State<NotesView> {
                   }
                   break;
                 case MenuAction.settings:
-                  Navigator.of(context).pushNamed(settingsRoute);
+                  Navigator.of(context).pushNamed(settingsRoute).then(
+                    (_) {
+                      Phoenix.rebirth(context);
+                    },
+                  );
                   break;
               }
             },

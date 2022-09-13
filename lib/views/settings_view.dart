@@ -15,7 +15,8 @@ class SettingsView extends StatefulWidget {
 class _SettingsViewState extends State<SettingsView> {
   final themes = ["Purple", "Green"];
   final currentTheme = "Purple";
-  String? value;
+
+  String? value = Boxes.getUserSettings().get("defaultKey")!.theme;
   @override
   Widget build(BuildContext context) {
     return Scaffold(

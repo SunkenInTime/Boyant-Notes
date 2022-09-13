@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:mynotes/constants/routes.dart';
 import 'package:mynotes/services/auth/auth_service.dart';
+import 'package:mynotes/services/hive/boxes.dart';
 import 'package:mynotes/services/hive/settings_service.dart';
 import 'package:mynotes/themes/themes.dart';
 import 'package:mynotes/views/forgot_password_view.dart';
@@ -21,8 +23,8 @@ const double sizedBoxHeight = 300;
 // const Color themeColor = Color.fromRGBO(85, 111, 68, 1);
 const Color bgColor = Color.fromRGBO(20, 20, 20, 1);
 const Color themeColor = Color.fromARGB(255, 107, 65, 114);
-// const Color bgColor = Color.fromARGB(255, 31, 31, 31);
-
+//const Color bgColor = Color.fromARGB(255, 31, 31, 31);
+late ThemeData currentTheme;
 const Color defTextColor = Colors.white;
 dynamic loadingCircle;
 late Icon shareIcon;
@@ -43,7 +45,7 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(UserSettingsAdapter());
   await Hive.openBox<UserSettings>("user_settings");
-  runApp(const HomePage());
+  runApp(Phoenix(child: const HomePage()));
 }
 
 class HomePage extends StatelessWidget {
@@ -51,9 +53,15 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final box = Boxes.getUserSettings();
+    if (box.get("defaultKey")!.theme == "Green") {
+      currentTheme = MyThemes.greenTheme;
+    } else {
+      currentTheme = MyThemes.purpleTheme;
+    }
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: MyThemes.purpleTheme,
+      theme: currentTheme,
       debugShowCheckedModeBanner: false,
       home: const Setup(),
       routes: {
@@ -64,6 +72,7 @@ class HomePage extends StatelessWidget {
         createOrUpdateNoteRoute: (context) => const CreateUpdateNoteView(),
         forgotPasswordViewRoute: (context) => const ForgotPasswordView(),
         settingsRoute: (context) => const SettingsView(),
+        homeRoute: (context) => const HomePage(),
       },
     );
   }

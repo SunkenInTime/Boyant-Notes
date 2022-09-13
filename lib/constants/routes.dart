@@ -5,3 +5,4 @@ const verifyRoute = "/verify/";
 const createOrUpdateNoteRoute = "/notes/new-note";
 const forgotPasswordViewRoute = "/forgotpassword/";
 const settingsRoute = "/settings/";
+const homeRoute = "/home/";
