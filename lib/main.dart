@@ -72,6 +72,7 @@ class HomePage extends StatelessWidget {
     } else {
       box.put("defaultKey", UserSettings("Purple"));
       currentTheme = MyThemes.purpleTheme;
+      textColor = Colors.white;
     }
 
     return MaterialApp(
