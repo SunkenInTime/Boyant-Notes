@@ -45,6 +45,8 @@ void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter(UserSettingsAdapter());
   await Hive.openBox<UserSettings>("user_settings");
+
+  //Allows for app restart for themes
   runApp(Phoenix(child: const HomePage()));
 }
 
@@ -54,7 +56,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final box = Boxes.getUserSettings();
-
+    //Making sure a first time user has the theme setting
     if (box.containsKey("defaultKey")) {
       if (box.get("defaultKey", defaultValue: UserSettings("Purple"))!.theme ==
           "Green") {
