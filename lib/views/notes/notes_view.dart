@@ -168,6 +168,7 @@ class _NotesViewState extends State<NotesView> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: "btn1",
         onPressed: (() {
           Navigator.of(context).pushNamed(
             createOrUpdateNoteRoute,

@@ -17,12 +17,12 @@ class _MainUIViewState extends State<MainUIView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: screens[currentIndex],
-      //screen changing
-      // body: IndexedStack(
-      //   index: currentIndex,
-      //   children: screens,
-      // ),
+      // body: screens[currentIndex],
+      // screen changing
+      body: IndexedStack(
+        index: currentIndex,
+        children: screens,
+      ),
       // Bottom bar
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,

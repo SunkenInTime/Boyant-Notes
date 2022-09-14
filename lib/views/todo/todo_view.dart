@@ -227,7 +227,9 @@ class _TodoViewState extends State<TodoView> {
                           }
                         },
                         style: TextButton.styleFrom(
-                            primary: Colors.white, backgroundColor: themeColor),
+                          primary: Colors.white,
+                          backgroundColor: Theme.of(context).primaryColor,
+                        ),
                         child: const Text("Save"),
                       ),
                     ],
