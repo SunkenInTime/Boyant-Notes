@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mynotes/main.dart';
 import 'package:mynotes/views/notes/notes_view.dart';
 import 'package:mynotes/views/todo/todo_view.dart';
 
@@ -18,8 +17,12 @@ class _MainUIViewState extends State<MainUIView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //screen changing
-      body: screens[currentIndex],
+      // body: screens[currentIndex],
+      // screen changing
+      body: IndexedStack(
+        index: currentIndex,
+        children: screens,
+      ),
       // Bottom bar
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: currentIndex,

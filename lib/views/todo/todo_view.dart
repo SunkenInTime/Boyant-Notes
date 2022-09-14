@@ -67,13 +67,13 @@ class _TodoViewState extends State<TodoView> {
             },
             itemBuilder: (context) {
               return [
-                // const PopupMenuItem<MenuAction>(
-                //   value: MenuAction.settings,
-                //   child: Text(
-                //     "Settings",
-                //     style: TextStyle(color: Colors.black),
-                //   ),
-                // ),
+                const PopupMenuItem<MenuAction>(
+                  value: MenuAction.settings,
+                  child: Text(
+                    "Settings",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
                 const PopupMenuItem<MenuAction>(
                   value: MenuAction.logout,
                   child: Text(
@@ -227,7 +227,9 @@ class _TodoViewState extends State<TodoView> {
                           }
                         },
                         style: TextButton.styleFrom(
-                            primary: Colors.white, backgroundColor: themeColor),
+                          primary: Colors.white,
+                          backgroundColor: Theme.of(context).primaryColor,
+                        ),
                         child: const Text("Save"),
                       ),
                     ],

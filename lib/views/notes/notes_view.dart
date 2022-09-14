@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:mynotes/services/cloud/note/cloud_note.dart';
 import 'package:mynotes/services/cloud/firebase_cloud_storage.dart';
 
@@ -24,7 +25,6 @@ class _NotesViewState extends State<NotesView> {
   @override
   void initState() {
     _notesService = FirebaseCloudStorage();
-
     super.initState();
   }
 
@@ -61,19 +61,24 @@ class _NotesViewState extends State<NotesView> {
                   }
                   break;
                 case MenuAction.settings:
-                  Navigator.of(context).pushNamed(settingsRoute);
+                  Navigator.of(context).pushNamed(settingsRoute).then(
+                    (_) {
+                      Phoenix.rebirth(context);
+                      log("Changed");
+                    },
+                  );
                   break;
               }
             },
             itemBuilder: (context) {
               return [
-                // const PopupMenuItem<MenuAction>(
-                //   value: MenuAction.settings,
-                //   child: Text(
-                //     "Settings",
-                //     style: TextStyle(color: Colors.black),
-                //   ),
-                // ),
+                const PopupMenuItem<MenuAction>(
+                  value: MenuAction.settings,
+                  child: Text(
+                    "Settings",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
                 const PopupMenuItem<MenuAction>(
                   value: MenuAction.logout,
                   child: Text(
@@ -163,6 +168,7 @@ class _NotesViewState extends State<NotesView> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: "btn1",
         onPressed: (() {
           Navigator.of(context).pushNamed(
             createOrUpdateNoteRoute,

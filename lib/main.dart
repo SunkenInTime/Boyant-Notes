@@ -1,8 +1,12 @@
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:mynotes/constants/routes.dart';
 import 'package:mynotes/services/auth/auth_service.dart';
+import 'package:mynotes/services/hive/boxes.dart';
+import 'package:mynotes/services/hive/settings_service.dart';
 import 'package:mynotes/themes/themes.dart';
 import 'package:mynotes/views/forgot_password_view.dart';
 import 'package:mynotes/views/login_view.dart';
@@ -15,12 +19,12 @@ import "dart:developer" as devtools show log;
 
 const double sizedBoxWidth = 300;
 const double sizedBoxHeight = 300;
-
+late Color textColor;
 // const Color themeColor = Color.fromRGBO(85, 111, 68, 1);
 const Color bgColor = Color.fromRGBO(20, 20, 20, 1);
 const Color themeColor = Color.fromARGB(255, 107, 65, 114);
-// const Color bgColor = Color.fromARGB(255, 31, 31, 31);
-
+//const Color bgColor = Color.fromARGB(255, 31, 31, 31);
+late ThemeData currentTheme;
 const Color defTextColor = Colors.white;
 dynamic loadingCircle;
 late Icon shareIcon;
@@ -36,9 +40,14 @@ SizedBox createSpaceWidth(double height, double width) {
   );
 }
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const HomePage());
+  await Hive.initFlutter();
+  Hive.registerAdapter(UserSettingsAdapter());
+  await Hive.openBox<UserSettings>("user_settings");
+
+  //Allows for app restart for themes
+  runApp(Phoenix(child: const HomePage()));
 }
 
 class HomePage extends StatelessWidget {
@@ -46,9 +55,29 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final box = Boxes.getUserSettings();
+    //Making sure a first time user has the theme setting
+    if (box.containsKey("defaultKey")) {
+      if (box.get("defaultKey", defaultValue: UserSettings("Purple"))!.theme ==
+          "Green") {
+        currentTheme = MyThemes.greenTheme;
+        textColor = Colors.white;
+      } else if (box.get("defaultKey")!.theme == "White") {
+        currentTheme = MyThemes.lightTheme;
+        textColor = Colors.black;
+      } else {
+        currentTheme = MyThemes.purpleTheme;
+        textColor = Colors.white;
+      }
+    } else {
+      box.put("defaultKey", UserSettings("Purple"));
+      currentTheme = MyThemes.purpleTheme;
+      textColor = Colors.white;
+    }
+
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: MyThemes.purpleTheme,
+      theme: currentTheme,
       debugShowCheckedModeBanner: false,
       home: const Setup(),
       routes: {
@@ -59,6 +88,7 @@ class HomePage extends StatelessWidget {
         createOrUpdateNoteRoute: (context) => const CreateUpdateNoteView(),
         forgotPasswordViewRoute: (context) => const ForgotPasswordView(),
         settingsRoute: (context) => const SettingsView(),
+        homeRoute: (context) => const HomePage(),
       },
     );
   }

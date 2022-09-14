@@ -116,6 +116,7 @@ class _CreateUpdateNoteViewState extends State<CreateUpdateNoteView> {
             border: InputBorder.none,
             hintText: "Title",
           ),
+          cursorColor: Colors.white54,
         ),
         actions: [
           IconButton(
