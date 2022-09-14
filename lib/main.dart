@@ -19,7 +19,7 @@ import "dart:developer" as devtools show log;
 
 const double sizedBoxWidth = 300;
 const double sizedBoxHeight = 300;
-
+late Color textColor;
 // const Color themeColor = Color.fromRGBO(85, 111, 68, 1);
 const Color bgColor = Color.fromRGBO(20, 20, 20, 1);
 const Color themeColor = Color.fromARGB(255, 107, 65, 114);
@@ -61,10 +61,13 @@ class HomePage extends StatelessWidget {
       if (box.get("defaultKey", defaultValue: UserSettings("Purple"))!.theme ==
           "Green") {
         currentTheme = MyThemes.greenTheme;
+        textColor = Colors.white;
       } else if (box.get("defaultKey")!.theme == "White") {
         currentTheme = MyThemes.lightTheme;
+        textColor = Colors.black;
       } else {
         currentTheme = MyThemes.purpleTheme;
+        textColor = Colors.white;
       }
     } else {
       box.put("defaultKey", UserSettings("Purple"));

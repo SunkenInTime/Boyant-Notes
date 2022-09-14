@@ -4,7 +4,7 @@ import 'package:mynotes/services/hive/settings_service.dart';
 
 import '../services/hive/boxes.dart';
 
-late Color textColor;
+import 'package:mynotes/main.dart';
 
 class SettingsView extends StatefulWidget {
   const SettingsView({Key? key}) : super(key: key);
@@ -14,17 +14,14 @@ class SettingsView extends StatefulWidget {
 }
 
 class _SettingsViewState extends State<SettingsView> {
-  final themes = ["Purple", "Green", "White"];
+  //White ver
+  // final themes = ["Purple", "Green", "White"];
+  final themes = ["Purple", "Green"];
   final currentTheme = "Purple";
 
   String? value = Boxes.getUserSettings().get("defaultKey")!.theme;
   @override
   Widget build(BuildContext context) {
-    if (Boxes.getUserSettings().get("defaultKey")!.theme == "White") {
-      textColor = Colors.black;
-    }else{
-      
-    }
     // else {
     //   textColor = Colors.white;
     // }
@@ -46,7 +43,7 @@ class _SettingsViewState extends State<SettingsView> {
               ),
               const Padding(padding: EdgeInsets.symmetric(horizontal: 10)),
               DropdownButton<String>(
-                dropdownColor: Colors.white,
+                dropdownColor: Colors.black,
                 items: themes.map(buildMenuItem).toList(),
                 value: value,
                 onChanged: (value) {

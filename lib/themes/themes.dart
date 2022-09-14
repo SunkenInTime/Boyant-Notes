@@ -69,12 +69,20 @@ class MyThemes {
     ),
     primaryColor: whitePrimary,
     scaffoldBackgroundColor: whiteBg,
-    primaryTextTheme: Typography().white,
-    textTheme: Typography().white,
+    primaryTextTheme: Typography().black,
+    textTheme: Typography().black,
     iconTheme: const IconThemeData(color: Colors.white),
     unselectedWidgetColor: const Color.fromARGB(255, 102, 102, 102),
     inputDecorationTheme: const InputDecorationTheme(
       hintStyle: TextStyle(color: Colors.white70),
+    ),
+
+    appBarTheme: const AppBarTheme(
+      titleTextStyle: TextStyle(
+        color: Colors.white,
+        fontWeight: FontWeight.bold,
+        fontSize: 21,
+      ),
     ),
 
     //Change
