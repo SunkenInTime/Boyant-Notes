@@ -1,6 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:mynotes/services/cloud/firebase_cloud_storage.dart';
 import 'package:mynotes/views/todo/todo_list_view.dart';
 
@@ -61,8 +64,12 @@ class _TodoViewState extends State<TodoView> {
                   }
                   break;
                 case MenuAction.settings:
-                  Navigator.of(context).pushNamed(settingsRoute);
-                  break;
+                  Navigator.of(context).pushNamed(settingsRoute).then(
+                    (_) {
+                      Phoenix.rebirth(context);
+                      log("Changed");
+                    },
+                  );
               }
             },
             itemBuilder: (context) {

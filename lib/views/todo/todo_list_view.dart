@@ -97,7 +97,7 @@ class TodoListView extends StatelessWidget {
                     onCheckFalse(todo);
                   }
                 },
-                activeColor: themeColor,
+                activeColor: Theme.of(context).primaryColor,
               ),
             ),
           );
