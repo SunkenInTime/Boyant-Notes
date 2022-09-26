@@ -46,14 +46,8 @@ class _LoginViewState extends State<LoginView> {
       body: Center(
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(
-                width: 210,
-                child: Image(
-                  image: AssetImage("assets/Boyant Icon.png"),
-                ),
-              ),
               //Email
               SizedBox(
                 width: sizedBoxWidth,
