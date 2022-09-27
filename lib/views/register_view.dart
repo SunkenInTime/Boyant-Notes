@@ -43,14 +43,8 @@ class _RegisterViewState extends State<RegisterView> {
       body: Center(
         child: SingleChildScrollView(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const SizedBox(
-                width: 210,
-                child: Image(
-                  image: AssetImage("assets/Boyant Icon.png"),
-                ),
-              ),
               //Email
               SizedBox(
                 width: sizedBoxWidth,
