@@ -203,8 +203,22 @@ class _TodoViewState extends State<TodoView> {
                 Container(
                   margin: const EdgeInsets.only(right: 10),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      // IconButton(
+                      //   onPressed: () {
+                      //     showDatePicker(
+                      //       context: context,
+                      //       initialDate: DateTime.now(),
+                      //       firstDate: DateTime(2021),
+                      //       lastDate: DateTime(2101),
+                      //     );
+                      //   },
+                      //   icon: Icon(
+                      //     Icons.calendar_month_outlined,
+                      //     color: Theme.of(context).primaryColor,
+                      //   ),
+                      // ),
                       TextButton(
                         onPressed: () async {
                           final title = _titleController.text;
