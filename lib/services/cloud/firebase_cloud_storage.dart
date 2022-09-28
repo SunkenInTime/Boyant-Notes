@@ -43,17 +43,6 @@ class FirebaseCloudStorage {
     }
   }
 
-  Future<void> updateTheme({
-    required String documentId,
-    required String theme,
-  }) async {
-    try {
-      await userSettings.doc(documentId).update({themeFieldName: theme});
-    } catch (e) {
-      throw CouldNotUpdateSettingException();
-    }
-  }
-
   // Todolist
   Future<void> updateTodo({
     required String documentId,
@@ -114,13 +103,6 @@ class FirebaseCloudStorage {
     );
   }
 
-  Future<void> createUserSetting({required String ownerUserId}) async {
-    await userSettings.add({
-      ownerUserIdFieldName: ownerUserId,
-      themeFieldName: "Purple",
-    });
-  }
-
   // Todolist
   Future<CloudTodo> createNewTodo({required String ownerUserId}) async {
     final document = await todoLists.add({
@@ -131,12 +113,12 @@ class FirebaseCloudStorage {
     });
     final fecthedTodo = await document.get();
     return CloudTodo(
-      documentId: fecthedTodo.id,
-      userId: ownerUserId,
-      description: "",
-      title: "",
-      isChecked: false,
-    );
+        documentId: fecthedTodo.id,
+        userId: ownerUserId,
+        description: "",
+        title: "",
+        isChecked: false,
+        dueDate: null);
   }
 
   static final FirebaseCloudStorage _shared =
