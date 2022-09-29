@@ -102,63 +102,67 @@ class TodoListView extends StatelessWidget {
             ),
           );
         } else {
-          return Dismissible(
-            direction: DismissDirection.endToStart,
-            key: Key(todo.documentId),
-            onDismissed: (direction) async {
-              onDeleteTodo(todo);
-            },
-            confirmDismiss: (direction) async {
-              return await showDeleteDialog(context);
-            },
-            background: Container(
-              color: Colors.red.shade700,
-              child: Align(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
-                    Icon(
-                      Icons.delete_forever,
-                      color: Colors.white,
-                    ),
-                    Text(
-                      " Delete",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w700,
-                      ),
-                      textAlign: TextAlign.right,
-                    ),
-                    SizedBox(
-                      width: 20,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            child: ListTile(
-              onTap: () {
-                onTap(todo);
-              },
-              title: Text(
-                todo.title,
-                style: TextStyle(color: textColor, decoration: textDecoration),
-              ),
-              leading: Checkbox(
-                value: todo.isChecked,
-                onChanged: (value) {
-                  if (value == true) {
-                    onCheckTrue(todo);
-                  } else {
-                    onCheckFalse(todo);
-                  }
-                },
-                activeColor: Theme.of(context).primaryColor,
-              ),
-            ),
-          );
+          return noDescriptionTile(todo, context, textDecoration);
         }
       },
+    );
+  }
+
+  Dismissible noDescriptionTile(todo, context, textDecoration) {
+    return Dismissible(
+      direction: DismissDirection.endToStart,
+      key: Key(todo.documentId),
+      onDismissed: (direction) async {
+        onDeleteTodo(todo);
+      },
+      confirmDismiss: (direction) async {
+        return await showDeleteDialog(context);
+      },
+      background: Container(
+        color: Colors.red.shade700,
+        child: Align(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: const [
+              Icon(
+                Icons.delete_forever,
+                color: Colors.white,
+              ),
+              Text(
+                " Delete",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                ),
+                textAlign: TextAlign.right,
+              ),
+              SizedBox(
+                width: 20,
+              ),
+            ],
+          ),
+        ),
+      ),
+      child: ListTile(
+        onTap: () {
+          onTap(todo);
+        },
+        title: Text(
+          todo.title,
+          style: TextStyle(color: textColor, decoration: textDecoration),
+        ),
+        leading: Checkbox(
+          value: todo.isChecked,
+          onChanged: (value) {
+            if (value == true) {
+              onCheckTrue(todo);
+            } else {
+              onCheckFalse(todo);
+            }
+          },
+          activeColor: Theme.of(context).primaryColor,
+        ),
+      ),
     );
   }
 }
