@@ -19,6 +19,8 @@ class CouldNotUpdateCheckException extends CloudStrorageException {}
 
 class CouldNotUpdateSettingException extends CloudStrorageException {}
 
+class CouldNotUpdateDueException extends CloudStrorageException {}
+
 // Delete
 class CouldNotDeleteNoteException extends CloudStrorageException {}
 

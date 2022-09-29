@@ -7,7 +7,7 @@ class CloudTodo {
   final String description;
   final String title;
   final bool isChecked;
-  final DateTime? dueDate;
+  final Timestamp? dueDate;
 
   const CloudTodo({
     required this.dueDate,
@@ -24,5 +24,5 @@ class CloudTodo {
         title = snapshot.data()[titleFieldName] as String,
         description = snapshot.data()[descriptionFieldName] as String,
         isChecked = snapshot.data()[isCheckedFieldName] as bool,
-        dueDate = snapshot.data()[dueDateFieldName] as DateTime?;
+        dueDate = snapshot.data()[dueDateFieldName];
 }

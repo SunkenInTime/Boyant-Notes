@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:mynotes/services/cloud/firebase_cloud_storage.dart';
@@ -25,6 +26,7 @@ class _TodoViewState extends State<TodoView> {
   late final FirebaseCloudStorage _todoService;
   late final TextEditingController _titleController;
   late final TextEditingController _descriptionController;
+  DateTime? pickedDate;
   String get userId => AuthService.firebase().currentUser!.id;
 
   @override
@@ -207,7 +209,7 @@ class _TodoViewState extends State<TodoView> {
                     children: [
                       IconButton(
                         onPressed: () async {
-                          DateTime? pickedDate = await showDatePicker(
+                          pickedDate = await showDatePicker(
                             context: context,
                             initialDate: DateTime.now(),
                             firstDate: DateTime(2021),
@@ -231,21 +233,32 @@ class _TodoViewState extends State<TodoView> {
                             if (isExistingTodo != null) {
                               final CloudTodo todo = isExistingTodo;
 
-                              Navigator.pop(context);
+                              if (pickedDate != null) {
+                                await _todoService.updateTodoTime(
+                                    documentId: todo.documentId,
+                                    dueDate: Timestamp.fromDate(pickedDate!));
+                              }
                               await _todoService.updateTodo(
-                                  documentId: todo.documentId,
-                                  title: title,
-                                  description: description);
+                                documentId: todo.documentId,
+                                title: title,
+                                description: description,
+                              );
                             } else {
                               final CloudTodo todo = await _todoService
                                   .createNewTodo(ownerUserId: userId);
 
-                              Navigator.pop(context);
+                              if (pickedDate != null) {
+                                await _todoService.updateTodoTime(
+                                    documentId: todo.documentId,
+                                    dueDate: Timestamp.fromDate(pickedDate!));
+                              }
                               await _todoService.updateTodo(
-                                  documentId: todo.documentId,
-                                  title: title,
-                                  description: description);
+                                documentId: todo.documentId,
+                                title: title,
+                                description: description,
+                              );
                             }
+                            Navigator.pop(context);
                           }
                         },
                         style: TextButton.styleFrom(

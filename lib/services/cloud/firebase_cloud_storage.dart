@@ -59,6 +59,15 @@ class FirebaseCloudStorage {
     }
   }
 
+  Future<void> updateTodoTime(
+      {required String documentId, required Timestamp? dueDate}) async {
+    try {
+      await todoLists.doc(documentId).update({dueDateFieldName: dueDate});
+    } catch (e) {
+      throw CouldNotUpdateDueException();
+    }
+  }
+
   // Todolist
   Future<void> checkTodo({
     required String documentId,
@@ -110,15 +119,17 @@ class FirebaseCloudStorage {
       titleFieldName: "",
       descriptionFieldName: "",
       isCheckedFieldName: false,
+      dueDateFieldName: null,
     });
     final fecthedTodo = await document.get();
     return CloudTodo(
-        documentId: fecthedTodo.id,
-        userId: ownerUserId,
-        description: "",
-        title: "",
-        isChecked: false,
-        dueDate: null);
+      documentId: fecthedTodo.id,
+      userId: ownerUserId,
+      description: "",
+      title: "",
+      isChecked: false,
+      dueDate: null,
+    );
   }
 
   static final FirebaseCloudStorage _shared =
