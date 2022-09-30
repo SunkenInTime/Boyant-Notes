@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:mynotes/services/cloud/note/cloud_note.dart';
 import 'package:mynotes/services/cloud/cloud_storage_constants.dart';
 import 'package:mynotes/services/cloud/note/cloud_storage_exceptions.dart';
@@ -43,17 +46,6 @@ class FirebaseCloudStorage {
     }
   }
 
-  Future<void> updateTheme({
-    required String documentId,
-    required String theme,
-  }) async {
-    try {
-      await userSettings.doc(documentId).update({themeFieldName: theme});
-    } catch (e) {
-      throw CouldNotUpdateSettingException();
-    }
-  }
-
   // Todolist
   Future<void> updateTodo({
     required String documentId,
@@ -67,6 +59,15 @@ class FirebaseCloudStorage {
       });
     } catch (e) {
       throw CouldNotUpdateTodoListException();
+    }
+  }
+
+  Future<void> updateTodoTime(
+      {required String documentId, required Timestamp? dueDate}) async {
+    try {
+      await todoLists.doc(documentId).update({dueDateFieldName: dueDate});
+    } catch (e) {
+      throw CouldNotUpdateDueException();
     }
   }
 
@@ -114,13 +115,6 @@ class FirebaseCloudStorage {
     );
   }
 
-  Future<void> createUserSetting({required String ownerUserId}) async {
-    await userSettings.add({
-      ownerUserIdFieldName: ownerUserId,
-      themeFieldName: "Purple",
-    });
-  }
-
   // Todolist
   Future<CloudTodo> createNewTodo({required String ownerUserId}) async {
     final document = await todoLists.add({
@@ -128,6 +122,7 @@ class FirebaseCloudStorage {
       titleFieldName: "",
       descriptionFieldName: "",
       isCheckedFieldName: false,
+      dueDateFieldName: null,
     });
     final fecthedTodo = await document.get();
     return CloudTodo(
@@ -136,6 +131,7 @@ class FirebaseCloudStorage {
       description: "",
       title: "",
       isChecked: false,
+      dueDate: null,
     );
   }
 

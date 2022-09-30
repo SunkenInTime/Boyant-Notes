@@ -2,6 +2,7 @@
 
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:mynotes/services/cloud/firebase_cloud_storage.dart';
@@ -25,6 +26,7 @@ class _TodoViewState extends State<TodoView> {
   late final FirebaseCloudStorage _todoService;
   late final TextEditingController _titleController;
   late final TextEditingController _descriptionController;
+  DateTime? pickedDate;
   String get userId => AuthService.firebase().currentUser!.id;
 
   @override
@@ -205,20 +207,31 @@ class _TodoViewState extends State<TodoView> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // IconButton(
-                      //   onPressed: () {
-                      //     showDatePicker(
-                      //       context: context,
-                      //       initialDate: DateTime.now(),
-                      //       firstDate: DateTime(2021),
-                      //       lastDate: DateTime(2101),
-                      //     );
-                      //   },
-                      //   icon: Icon(
-                      //     Icons.calendar_month_outlined,
-                      //     color: Theme.of(context).primaryColor,
-                      //   ),
-                      // ),
+                      IconButton(
+                        onPressed: () async {
+                          if (isExistingTodo != null) {
+                            pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: isExistingTodo.dueDate!.toDate(),
+                              firstDate: DateTime(2021),
+                              lastDate: DateTime(2101),
+                            );
+                            // log(pickedDate.toString());
+                          } else {
+                            pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2021),
+                              lastDate: DateTime(2101),
+                            );
+                            // log(pickedDate.toString());
+                          }
+                        },
+                        icon: Icon(
+                          Icons.calendar_month_outlined,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
                       TextButton(
                         onPressed: () async {
                           final title = _titleController.text;
@@ -230,21 +243,32 @@ class _TodoViewState extends State<TodoView> {
                             if (isExistingTodo != null) {
                               final CloudTodo todo = isExistingTodo;
 
-                              Navigator.pop(context);
+                              if (pickedDate != null) {
+                                await _todoService.updateTodoTime(
+                                    documentId: todo.documentId,
+                                    dueDate: Timestamp.fromDate(pickedDate!));
+                              }
                               await _todoService.updateTodo(
-                                  documentId: todo.documentId,
-                                  title: title,
-                                  description: description);
+                                documentId: todo.documentId,
+                                title: title,
+                                description: description,
+                              );
                             } else {
                               final CloudTodo todo = await _todoService
                                   .createNewTodo(ownerUserId: userId);
 
-                              Navigator.pop(context);
+                              if (pickedDate != null) {
+                                await _todoService.updateTodoTime(
+                                    documentId: todo.documentId,
+                                    dueDate: Timestamp.fromDate(pickedDate!));
+                              }
                               await _todoService.updateTodo(
-                                  documentId: todo.documentId,
-                                  title: title,
-                                  description: description);
+                                documentId: todo.documentId,
+                                title: title,
+                                description: description,
+                              );
                             }
+                            Navigator.pop(context);
                           }
                         },
                         style: TextButton.styleFrom(
@@ -263,40 +287,3 @@ class _TodoViewState extends State<TodoView> {
         });
   }
 }
-
-// showModalBottomSheet(
-//       isScrollControlled: true,
-//       context: context,
-//       builder: (BuildContext context) {
-//         return Padding(
-//           padding: EdgeInsets.only(
-//               bottom: MediaQuery.of(context)
-//                   .viewInsets
-//                   .bottom), //keeps above keyboard
-//           child: Column(
-//             mainAxisSize: MainAxisSize.min,
-//             children: [
-//               createSpace(1),
-//               const TextField(
-//                 keyboardType: TextInputType.multiline,
-//                 autofocus: true,
-//                 maxLines: null,
-//                 decoration: InputDecoration(
-//                   contentPadding: EdgeInsets.only(left: 10),
-//                   border: InputBorder.none,
-//                   hintText: "Title",
-//                 ),
-//               ),
-//               const TextField(
-//                 style: TextStyle(height: 1),
-//                 decoration: InputDecoration(
-//                   border: InputBorder.none,
-//                   contentPadding: EdgeInsets.only(left: 20),
-//                   hintText: "Description",
-//                 ),
-//               ),
-//             ],
-//           ),
-//         );
-//       }
-//       );
