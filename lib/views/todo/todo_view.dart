@@ -209,13 +209,23 @@ class _TodoViewState extends State<TodoView> {
                     children: [
                       IconButton(
                         onPressed: () async {
-                          pickedDate = await showDatePicker(
-                            context: context,
-                            initialDate: DateTime.now(),
-                            firstDate: DateTime(2021),
-                            lastDate: DateTime(2101),
-                          );
-                          log(pickedDate.toString());
+                          if (isExistingTodo != null) {
+                            pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: isExistingTodo.dueDate!.toDate(),
+                              firstDate: DateTime(2021),
+                              lastDate: DateTime(2101),
+                            );
+                            // log(pickedDate.toString());
+                          } else {
+                            pickedDate = await showDatePicker(
+                              context: context,
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2021),
+                              lastDate: DateTime(2101),
+                            );
+                            // log(pickedDate.toString());
+                          }
                         },
                         icon: Icon(
                           Icons.calendar_month_outlined,
@@ -277,40 +287,3 @@ class _TodoViewState extends State<TodoView> {
         });
   }
 }
-
-// showModalBottomSheet(
-//       isScrollControlled: true,
-//       context: context,
-//       builder: (BuildContext context) {
-//         return Padding(
-//           padding: EdgeInsets.only(
-//               bottom: MediaQuery.of(context)
-//                   .viewInsets
-//                   .bottom), //keeps above keyboard
-//           child: Column(
-//             mainAxisSize: MainAxisSize.min,
-//             children: [
-//               createSpace(1),
-//               const TextField(
-//                 keyboardType: TextInputType.multiline,
-//                 autofocus: true,
-//                 maxLines: null,
-//                 decoration: InputDecoration(
-//                   contentPadding: EdgeInsets.only(left: 10),
-//                   border: InputBorder.none,
-//                   hintText: "Title",
-//                 ),
-//               ),
-//               const TextField(
-//                 style: TextStyle(height: 1),
-//                 decoration: InputDecoration(
-//                   border: InputBorder.none,
-//                   contentPadding: EdgeInsets.only(left: 20),
-//                   hintText: "Description",
-//                 ),
-//               ),
-//             ],
-//           ),
-//         );
-//       }
-//       );
