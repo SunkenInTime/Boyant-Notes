@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:mynotes/services/cloud/note/cloud_note.dart';
 import 'package:mynotes/services/cloud/cloud_storage_constants.dart';
 import 'package:mynotes/services/cloud/note/cloud_storage_exceptions.dart';
@@ -130,6 +131,10 @@ class FirebaseCloudStorage {
       isChecked: false,
       dueDate: null,
     );
+  }
+
+  Widget calculateDate(DateTime currentTime, DateTime comparedTime) {
+    return Text("");
   }
 
   static final FirebaseCloudStorage _shared =
