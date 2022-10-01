@@ -1,7 +1,10 @@
 import 'dart:developer';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+
+import '../services/cloud/todo/cloud_todo.dart';
 
 Widget? calculateDate(DateTime comparedTime, bool isChecked) {
   int timeInDays = comparedTime.difference(DateTime.now()).inDays;
@@ -63,4 +66,23 @@ Widget? calculateDate(DateTime comparedTime, bool isChecked) {
     "Error",
     style: TextStyle(color: Colors.red.shade700),
   );
+}
+
+int calculateDifferenceSort(CloudTodo aTodo, CloudTodo bTodo) {
+  if (aTodo.dueDate != null && bTodo.dueDate == null) {
+    return -1;
+  } else if (aTodo.dueDate == null && bTodo.dueDate != null) {
+    return 1;
+  } else if (aTodo.dueDate != null && bTodo.dueDate != null) {
+    final aTime = aTodo.dueDate!.toDate();
+    final bTime = bTodo.dueDate!.toDate();
+    final comparedTime = aTime.compareTo(bTime);
+    if (comparedTime > 0) {
+      return -1;
+    } else {
+      return 1;
+    }
+  } else {
+    return -1;
+  }
 }
