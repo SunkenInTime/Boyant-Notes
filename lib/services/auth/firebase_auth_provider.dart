@@ -7,6 +7,8 @@ import "package:firebase_auth/firebase_auth.dart"
     show FirebaseAuth, FirebaseAuthException;
 import "dart:developer" as devtools show log;
 
+import 'package:mynotes/services/cloud/firebase_cloud_storage.dart';
+
 class FirebaseAuthProvider implements AuthProvider {
   @override
   Future<AuthUser> createUser({
@@ -121,5 +123,16 @@ class FirebaseAuthProvider implements AuthProvider {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+  }
+
+  @override
+  Future<void> deleteAccount() async {
+    final user = FirebaseAuth.instance.currentUser;
+    FirebaseCloudStorage().deleteAll(ownerUserId: user!.uid);
+    try {
+      await user.delete();
+    } catch (e) {
+      throw AccoundDeletionAuthException();
+    }
   }
 }

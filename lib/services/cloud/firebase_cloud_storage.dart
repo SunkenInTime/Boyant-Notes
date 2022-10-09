@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:mynotes/services/auth/auth_exceptions.dart';
 import 'package:mynotes/services/cloud/note/cloud_note.dart';
 import 'package:mynotes/services/cloud/cloud_storage_constants.dart';
 import 'package:mynotes/services/cloud/note/cloud_storage_exceptions.dart';
@@ -18,6 +19,24 @@ class FirebaseCloudStorage {
       await notes.doc(documentId).delete();
     } catch (e) {
       throw CouldNotUpdateNoteException();
+    }
+  }
+
+  Future<void> deleteAll({required String ownerUserId}) async {
+    try {
+      await for (final value in allNotes(ownerUserId: ownerUserId)) {
+        for (final v in value) {
+          await notes.doc(v.documentId).delete();
+        }
+      }
+
+      await for (final value in allTodo(ownerUserId: ownerUserId)) {
+        for (final v in value) {
+          await todoLists.doc(v.documentId).delete();
+        }
+      }
+    } catch (e) {
+      throw AccoundDeletionAuthException();
     }
   }
 

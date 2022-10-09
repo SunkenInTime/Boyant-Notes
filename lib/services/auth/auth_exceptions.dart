@@ -18,3 +18,5 @@ class GenericAuthException implements Exception {}
 class UserNotLoggedInAuthException implements Exception {}
 
 class PasswordResetAuthException implements Exception {}
+
+class AccoundDeletionAuthException implements Exception {}

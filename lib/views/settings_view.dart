@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:mynotes/constants/routes.dart';
+import 'package:mynotes/services/auth/auth_service.dart';
 
 import 'package:mynotes/services/hive/settings_service.dart';
+import 'package:mynotes/utilities/dialogs/delete_dialog.dart';
+import 'package:mynotes/views/main_ui.dart';
 
 import '../services/hive/boxes.dart';
 
@@ -57,7 +61,30 @@ class _SettingsViewState extends State<SettingsView> {
                 },
               ),
             ],
-          )
+          ),
+          createSpace(30),
+          SizedBox(
+            height: 50,
+            width: 300,
+            child: OutlinedButton(
+              onPressed: () async {
+                final shouldDelete = await showAcctDeleteDialog(context);
+
+                if (shouldDelete == true) {
+                  await AuthService.firebase().deleteAccount();
+                  if (!mounted) return;
+                  Navigator.of(context)
+                      .pushNamedAndRemoveUntil(loginRoute, (_) => false);
+                }
+              },
+              style: OutlinedButton.styleFrom(
+                  side: BorderSide(color: Colors.red.shade700)),
+              child: Text(
+                "Delete Account",
+                style: TextStyle(color: Colors.red.shade700),
+              ),
+            ),
+          ),
         ]),
       ),
     );
