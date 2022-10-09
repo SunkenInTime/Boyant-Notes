@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:mynotes/constants/routes.dart';
 import 'package:mynotes/services/auth/auth_service.dart';
@@ -71,7 +73,11 @@ class _SettingsViewState extends State<SettingsView> {
                 final shouldDelete = await showAcctDeleteDialog(context);
 
                 if (shouldDelete == true) {
-                  await AuthService.firebase().deleteAccount();
+                  try {
+                    await AuthService.firebase().deleteAccount();
+                  } catch (e) {
+                    log("oopsie");
+                  }
                   if (!mounted) return;
                   Navigator.of(context)
                       .pushNamedAndRemoveUntil(loginRoute, (_) => false);
