@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/views/notes/notes_view.dart';
 import 'package:mynotes/views/todo/todo_view.dart';
@@ -10,6 +11,12 @@ class MainUIView extends StatefulWidget {
 }
 
 const man = true;
+
+const dryPath = "audio/dry_pop.wav";
+const goodPath = "audio/good_tick.wav";
+const clickPath = "audio/short_click.mp3";
+const popPath = "audio/short-pop.wav";
+AudioCache player = AudioCache();
 
 class _MainUIViewState extends State<MainUIView> {
   int currentIndex = 0;
