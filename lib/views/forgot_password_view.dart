@@ -71,7 +71,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView> {
                 height: 55,
                 child: TextButton(
                   style: TextButton.styleFrom(
-                    primary: defTextColor,
+                    foregroundColor: defTextColor,
                     backgroundColor: Theme.of(context).primaryColor,
                   ),
                   onPressed: () async {

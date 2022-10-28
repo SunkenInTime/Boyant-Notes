@@ -34,7 +34,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
               createSpace(10),
               TextButton(
                 style: TextButton.styleFrom(
-                  primary: Colors.white,
+                  foregroundColor: Colors.white,
                   backgroundColor: Theme.of(context).primaryColor,
                 ),
                 onPressed: () async {
@@ -45,7 +45,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
               TextButton(
                 onPressed: () async {
                   Navigator.of(context)
-                      .pushNamedAndRemoveUntil(registerRoute, (route) => false);
+                      .pushNamedAndRemoveUntil(loginRoute, (route) => false);
                   await AuthService.firebase().logOut();
                 },
                 child: const Text(

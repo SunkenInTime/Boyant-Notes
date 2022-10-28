@@ -112,7 +112,7 @@ class _RegisterViewState extends State<RegisterView> {
                 height: sizedBoxHeight,
                 child: TextButton(
                     style: TextButton.styleFrom(
-                      primary: Colors.white,
+                      foregroundColor: Colors.white,
                       backgroundColor: Theme.of(context).primaryColor,
                     ),
                     onPressed: () async {
@@ -156,7 +156,7 @@ class _RegisterViewState extends State<RegisterView> {
               ),
               TextButton(
                   style: TextButton.styleFrom(
-                    primary: Colors.white,
+                    foregroundColor: Colors.white,
                   ),
                   onPressed: () {
                     Navigator.of(context).pushNamedAndRemoveUntil(

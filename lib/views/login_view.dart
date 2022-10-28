@@ -116,7 +116,7 @@ class _LoginViewState extends State<LoginView> {
                 height: sizedBoxHeight,
                 child: TextButton(
                   style: TextButton.styleFrom(
-                    primary: defTextColor,
+                    foregroundColor: defTextColor,
                     backgroundColor: Theme.of(context).primaryColor,
                   ),
                   onPressed: () async {
@@ -168,9 +168,6 @@ class _LoginViewState extends State<LoginView> {
               ),
 
               TextButton(
-                style: TextButton.styleFrom(
-                  primary: defTextColor,
-                ),
                 onPressed: () {
                   Navigator.of(context).pushNamedAndRemoveUntil(
                     registerRoute,
@@ -182,7 +179,7 @@ class _LoginViewState extends State<LoginView> {
 
               TextButton(
                 style: TextButton.styleFrom(
-                  primary: defTextColor,
+                  foregroundColor: defTextColor,
                 ),
                 onPressed: () {
                   Navigator.of(context).pushNamed(
