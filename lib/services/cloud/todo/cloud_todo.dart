@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:mynotes/services/cloud/cloud_storage_constants.dart';
 
+@immutable
 class CloudTodo {
   final String documentId;
   final String userId;
