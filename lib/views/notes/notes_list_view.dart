@@ -36,10 +36,10 @@ class NotesListView extends StatelessWidget {
             },
             background: Container(
               color: Colors.red.shade700,
-              child: Align(
+              child: const Align(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
+                  children: [
                     Icon(
                       Icons.delete_forever,
                       color: Colors.white,
@@ -90,10 +90,10 @@ class NotesListView extends StatelessWidget {
             },
             background: Container(
               color: Colors.red.shade700,
-              child: Align(
+              child: const Align(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
+                  children: [
                     Icon(
                       Icons.delete_forever,
                       color: Colors.white,
@@ -138,10 +138,10 @@ class NotesListView extends StatelessWidget {
             },
             background: Container(
               color: Colors.red.shade700,
-              child: Align(
+              child: const Align(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
+                  children: [
                     Icon(
                       Icons.delete_forever,
                       color: Colors.white,

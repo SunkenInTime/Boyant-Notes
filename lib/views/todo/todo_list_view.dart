@@ -1,7 +1,3 @@
-import 'dart:developer';
-import 'dart:html';
-
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/main.dart';
 import 'package:mynotes/utilities/dialogs/delete_dialog.dart';
@@ -88,10 +84,10 @@ class TodoListView extends StatelessWidget {
                     },
                     background: Container(
                       color: Colors.red.shade700,
-                      child: Align(
+                      child: const Align(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
-                          children: const [
+                          children: [
                             Icon(
                               Icons.delete_forever,
                               color: Colors.white,
@@ -154,10 +150,10 @@ class TodoListView extends StatelessWidget {
                     },
                     background: Container(
                       color: Colors.red.shade700,
-                      child: Align(
+                      child: const Align(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
-                          children: const [
+                          children: [
                             Icon(
                               Icons.delete_forever,
                               color: Colors.white,
@@ -221,10 +217,10 @@ class TodoListView extends StatelessWidget {
                     },
                     background: Container(
                       color: Colors.red.shade700,
-                      child: Align(
+                      child: const Align(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
-                          children: const [
+                          children: [
                             Icon(
                               Icons.delete_forever,
                               color: Colors.white,
@@ -280,10 +276,10 @@ class TodoListView extends StatelessWidget {
                     },
                     background: Container(
                       color: Colors.red.shade700,
-                      child: Align(
+                      child: const Align(
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
-                          children: const [
+                          children: [
                             Icon(
                               Icons.delete_forever,
                               color: Colors.white,
@@ -381,10 +377,10 @@ class TodoListView extends StatelessWidget {
                       },
                       background: Container(
                         color: Colors.red.shade700,
-                        child: Align(
+                        child: const Align(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
-                            children: const [
+                            children: [
                               Icon(
                                 Icons.delete_forever,
                                 color: Colors.white,
@@ -447,10 +443,10 @@ class TodoListView extends StatelessWidget {
                       },
                       background: Container(
                         color: Colors.red.shade700,
-                        child: Align(
+                        child: const Align(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
-                            children: const [
+                            children: [
                               Icon(
                                 Icons.delete_forever,
                                 color: Colors.white,
@@ -514,10 +510,10 @@ class TodoListView extends StatelessWidget {
                       },
                       background: Container(
                         color: Colors.red.shade700,
-                        child: Align(
+                        child: const Align(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
-                            children: const [
+                            children: [
                               Icon(
                                 Icons.delete_forever,
                                 color: Colors.white,
@@ -573,10 +569,10 @@ class TodoListView extends StatelessWidget {
                       },
                       background: Container(
                         color: Colors.red.shade700,
-                        child: Align(
+                        child: const Align(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
-                            children: const [
+                            children: [
                               Icon(
                                 Icons.delete_forever,
                                 color: Colors.white,

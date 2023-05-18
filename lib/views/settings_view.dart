@@ -6,7 +6,6 @@ import 'package:mynotes/services/auth/auth_service.dart';
 
 import 'package:mynotes/services/hive/settings_service.dart';
 import 'package:mynotes/utilities/dialogs/delete_dialog.dart';
-import 'package:mynotes/views/main_ui.dart';
 
 import '../services/hive/boxes.dart';
 

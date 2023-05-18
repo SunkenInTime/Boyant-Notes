@@ -1,14 +1,16 @@
 import 'dart:developer';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../services/cloud/todo/cloud_todo.dart';
 
 Widget? calculateDate(DateTime comparedTime, bool isChecked) {
-  int timeInDays = comparedTime.difference(DateTime.now()).inDays;
+  DateTime currentDate = DateTime.now().subtract(
+      Duration(hours: DateTime.now().hour, minutes: DateTime.now().minute));
 
+  int timeInDays = comparedTime.difference(currentDate).inDays;
+  log(timeInDays.toString());
   if (comparedTime.day != DateTime.now().day && timeInDays == 0) {
     timeInDays = 1;
   }
@@ -44,7 +46,6 @@ Widget? calculateDate(DateTime comparedTime, bool isChecked) {
       );
     }
     //Yesterday
-
   } else if (timeInDays < -1) {
     // Past yesterday in the past
     final formatedMonth =

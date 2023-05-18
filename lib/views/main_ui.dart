@@ -1,4 +1,3 @@
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:mynotes/views/notes/notes_view.dart';
 import 'package:mynotes/views/todo/todo_view.dart';

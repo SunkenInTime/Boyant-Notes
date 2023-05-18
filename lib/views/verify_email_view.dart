@@ -23,7 +23,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                "We've alredy sent you an email verification. Please check your email in order to verify your account.",
+                "We've alredy sent you an email verification. If you can't find the email check the spam folder",
                 textAlign: TextAlign.center,
               ),
               createSpace(10),
